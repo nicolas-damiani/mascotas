@@ -1,0 +1,40 @@
+/* 
+    Created on : 29-ene-2018, 11:49:05
+    Author     : alumnoFI
+*/
+table {
+    border: 1px solid #000;
+    width: 50%;
+}
+
+table th, table td {
+    font-family: Arial;
+    padding: 3px;
+}
+
+table th {
+    background: #333;
+    color: #fff;
+}
+
+table td.clave {
+    background: #ccc;
+}
+
+div.error {
+    border: red 2px solid;
+    padding: 10px;
+    margin: 10px 0;
+    background: #cff;
+    color: #300;
+    font-weight: bold;
+}
+
+form label {
+    display: inline-block;
+    width: 120px;
+}
+
+input.invalido {
+    border-color: red;
+}
