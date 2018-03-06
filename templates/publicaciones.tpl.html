@@ -7,26 +7,43 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script>
-            $(document).ready(function () {
-
-            });
-        </script>
+        <script type="text/javascript" src="js/publicaciones.js"></script>
     </head>
     <body>
-            <h1>PUBLICACIONES</h1>
-        
+        <h1>PUBLICACIONES</h1>
 
-        <ul id="listado-noticias">
-            {foreach from=$publicaciones item=valor key=clave}
-            <li>
-                <div>
-                    <h2><a href="publicacion.php?publicacion={$valor.id}">{$valor.titulo}</a></h2>
-                    <p>{$valor.descripcion}</p>
-                </div>
-            </li>
-            {/foreach}            
-        </ul>
+
+        <div id="p" style="display: none">$p</div>
+        <div class="cuerpo">
+            <table width="50%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>
+                        Título
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                </tr>
+                {foreach from=$publicaciones item=valor key=clave}
+                <tr>
+                    <td><a target="_blank" href="publicacion.php?publicacion={$valor.id}">{$valor.titulo}</a></td>
+                    <td>{$valor.descripcion}</td>
+                    <td>{$valor.tipo}</td>
+                </tr>
+                {/foreach}   
+            </table>
+        </div>
+
+        {include file="paginacion.tpl"}
+
+        <div style="display: none">
+            <div id="dialog-cargando" title="">
+                <p><img src="imgs/loading-icon.gif" alt="cargando..." /></p>
+            </div>
+        </div>
 
     </body>
 </html>
