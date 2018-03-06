@@ -27,8 +27,20 @@
             </div>
         </div>
         <p>{$publicacion.descripcion}</p>
-        <p>
-            <a href="noticias.php">Volver a las noticias</a>
-        </p>
-    </body>
+
+        <ul>{foreach from=$preguntas item=pregunta}
+        <div class="pregunta">Pregunta: {$pregunta.texto} <br></div>
+        <div class="respuesta">Respuesta: {$pregunta.respuesta} <br><br><br></div>
+        {/foreach}
+        </ul>
+        
+        {if !$usuario}
+        <a href="login.php">Inicia sesión para realizar una pregunta</a>
+        {else}
+        <a href="index.php">Nueva pregunta</a>
+        {/if}
+    <p>
+        <a href="noticias.php">Volver a las noticias</a>
+    </p>
+</body>
 </html>
