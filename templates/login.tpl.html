@@ -10,16 +10,16 @@
         <script>
         $(document).ready(function(){
             $("form").submit(function(e){
-               var user = $("#usuario").val().length;
+               var user = $("#email").val().length;
                var pass = $("#password").val().length;
                
                if(user == 0 || pass == 0){
                    e.preventDefault();
                    // alert("debe completar todos los datos.");
                    if(user == 0){
-                       $("#usuario").addClass("invalido").focus();
+                       $("#email").addClass("invalido").focus();
                    }else{                       
-                       $("#usuario").removeClass("invalido");
+                       $("#email").removeClass("invalido");
                        $("#password").addClass("invalido").focus();
                    }
                }
@@ -40,8 +40,8 @@
         
         <form action="?" method="POST">
             <div>
-                <label for="usuario">Nombre</label>
-                <input id="usuario" name="usuario" />
+                <label for="email">Email</label>
+                <input id="email" name="email" />
             </div>
             <div>
                 <label for="password">Contraseña</label>
