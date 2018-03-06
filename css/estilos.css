@@ -38,3 +38,66 @@ form label {
 input.invalido {
     border-color: red;
 }
+
+
+div.error {
+    border: red 2px solid;
+    padding: 10px;
+    margin: 10px 0;
+    background: #cff;
+    color: #300;
+    font-weight: bold;
+}
+
+div.fila {
+    overflow: auto;
+    margin: 10px 0;
+}
+
+div.fila .col1 {
+    width: 50%;
+    float: left;
+}
+
+
+#listado-noticias {
+    list-style: none;
+    padding:  0 0 10px;
+    margin: 0;
+}
+
+#listado-noticias li {
+    list-style: none;
+    padding:  0;
+    margin: 10px 0 0;
+}
+
+#listado-noticias li h2 a {
+    text-decoration: none;
+    color: #000;
+    font-family: Georgia Verdana Arial;
+}
+
+ul#paginacion {
+    text-decoration: none;
+    overflow: auto;
+    padding: 0;
+    margin: 0 auto;
+}
+
+ul#paginacion li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 5px;
+    float: left;
+}
+
+.cabezal {
+    position: fixed;
+    height: 40px;
+    background: #666;
+    color: #fff;
+    top: 0;
+    left: 0;
+    right: 0;
+}
