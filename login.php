@@ -26,11 +26,11 @@ if ($accion == "login") {
     $conn->conectar();
     
     $param = array(
-        array("login", $_POST["usuario"], "string"),
+        array("email", $_POST["email"], "string"),
         array("password", md5($_POST["password"]), "string")
     );
     
-    $sql = "select * from usuarios where login = :login and password = :password";
+    $sql = "select * from usuarios where email = :email and password = :password";
 
     $conn->consulta($sql, $param);
 

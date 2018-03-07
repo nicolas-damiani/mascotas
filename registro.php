@@ -10,17 +10,18 @@ $accion = isset($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
 
 if ($accion == "registrar") {
     
-    if(strlen($_POST["usuario"]) && strlen($_POST["password"]) && $_POST["password"] == $_POST["password2"]){
+    if(strlen($_POST["email"]) && strlen($_POST["usuario"]) && strlen($_POST["password"]) && $_POST["password"] == $_POST["password2"]){
 
         $conn->conectar();
 
         $param = array(
-            array("login", $_POST["usuario"], "string"),
+            array("email", $_POST["email"], "string"),
+            array("usuario", $_POST["usuario"], "string"),
             array("password", md5($_POST["password"]), "string")
         );
 
-        $sql = "insert usuarios (login, password, fecha_registro) "
-                . "values(:login, :password, current_timestamp)";
+        $sql = "insert usuarios (email, nombre, password) "
+                . "values(:email, :usuario, :password)";
 
         $conn->consulta($sql, $param);
 
@@ -38,7 +39,7 @@ if ($accion == "registrar") {
             die();
             
         } else {
-            $mensaje = "Los datos ingresados son incorrectos";
+            $mensaje = "Los datos ingresados son incorrecosanflandskdapjtos";
         }
 
         $conn->desconectar();
