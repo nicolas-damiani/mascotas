@@ -57,14 +57,38 @@ $paginacion[] = array("p" => 1, "texto" => "&lt;&lt;");
 $paginacion[] = array("p" => $anterior, "texto" => "&lt;");
 
 for ($i = 1; $i <= $cantidadPaginas; $i++) {
-
     $paginacion[] = array("p" => $i, "texto" => "" . $i, "sel" => ($pagina == $i));
 }
 
 $paginacion[] = array("p" => $siguiente, "texto" => "&gt;");
 $paginacion[] = array("p" => $cantidadPaginas, "texto" => "&gt;&gt;");
 
+$conn->conectar();
 
+$sql = "select * from especies order by nombre asc";
+$conn->consulta($sql);
+$especies = $conn->restantesRegistros();
+
+
+$conn->desconectar();
+
+
+$conn->conectar();
+
+$sql = "select * from barrios order by nombre asc";
+$conn->consulta($sql);
+$barrios = $conn->restantesRegistros();
+
+$conn->desconectar();
+
+
+$conn->conectar();
+
+$sql = "select * from razas order by nombre asc";
+$conn->consulta($sql);
+$razas = $conn->restantesRegistros();
+
+$conn->desconectar();
 
 while (list($clave, $valor) = each($resultado)) {
     if (strlen($valor["descripcion"]) > 150) {
@@ -88,8 +112,12 @@ if ($accion == "ajax") {
     echo json_encode($resultado);
 } else {
     $smarty->assign("publicaciones", $resultado);
+    $smarty->assign("especies", $especies);
+    $smarty->assign("barrios", $barrios);
+    $smarty->assign("razas", $razas);
     $smarty->assign("paginacion", $paginacion);
     $smarty->assign("p", $pagina);
+    
 
     $smarty->display("publicaciones.tpl.html");
 }

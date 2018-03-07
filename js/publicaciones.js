@@ -1,16 +1,23 @@
+var razas = {};
+var pagina = "";
+
+
 $(document).ready(function () {
     comportamientoInicial();
+    
+    
 });
 
 function comportamientoInicial() {
     $("#paginacion a").click(function (e) {
         e.preventDefault();
-
+        pagina = $('p').text();
+        razas = JSON.parse($('razas').text());
         cargarPagina($(this).attr("alt"));
     });
 }
 
-var pagina = $('p').text();
+
 
 function cargarPagina(p) {
     pagina = p;
