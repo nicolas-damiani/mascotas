@@ -29,7 +29,7 @@ function cargarPagina(p) {
         var tr = $("<tr />");
         tr.append($("<th />").html("Título"));
         tr.append($("<th />").html("Descripción"));
-        tr.append($("<th />").html("Estado"));
+        tr.append($("<th />").html("Tipo"));
         tabla.append(tr);
 
         for (var i = 0; i < data.length; i++) {
