@@ -97,6 +97,7 @@ class ConexionBD
 			//guardo el error generado
 			$this->sentencia = null;
 			$this->ultimoError = "{" . date("d/m/Y H:i:s") . "} " . $e->getMessage();
+                        die("a".$this->ultimoError);
 			$retorno = false;
 		}
 		return $retorno;
