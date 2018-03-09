@@ -15,7 +15,6 @@
         
         <h1>PUBLICACIONES</h1>
         <div id="p" style="display: none">{$p}</div>
-        <div id="razas" style="display: none">{json_encode($razas)}</div>
         <div class="buscadorBtn">Buscador</div>
         <div class="filtrosContainer">
             <div class="filtro">
