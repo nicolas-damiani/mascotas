@@ -11,9 +11,10 @@
         <link href="css/publicaciones.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <h1>PUBLICACIONES</h1>
-        <div id="p" style="display: none">$p</div>
         
+        
+        <h1>PUBLICACIONES</h1>
+        <div id="p" style="display: none">{$p}</div>
         <div class="buscadorBtn">Buscador</div>
         <div class="filtrosContainer">
             <div class="filtro">
@@ -29,14 +30,29 @@
                 <select id="filtroEspecie" class="filtroSelect">
                     <option value="0">No especifica</option>
                     {foreach from=$especies item=valor key=clave}
-                    <option value="$valor.id">$valor.nombre</option>
+                    <option value="{$valor.id}">{$valor.nombre}</option>
                     {/foreach}
                 </select>
             </div>
-            
+            <div class="filtro">
+                <div class="filtroTitulo">Raza</div>
+                <select id="filtroRaza" class="filtroSelect">
+                    <option value="0">No especifica</option>
+                </select>
+            </div>
+            <div class="filtro">
+                <div class="filtroTitulo">Barrio</div>
+                <select id="filtroBarrio" class="filtroSelect">
+                    <option value="0">No especifica</option>
+                    {foreach from=$barrios item=valor key=clave}
+                    <option value="{$valor.id}">{$valor.nombre}</option>
+                    {/foreach}
+                </select>
+            </div>
+
         </div>
-        
-        
+
+
         <div class="cuerpo">
             <table class="tablaPublicaciones" width="80%" cellpadding="0" cellspacing="0">
                 <tr>
@@ -67,8 +83,8 @@
                 <p><img src="imgs/loading-icon.gif" alt="cargando..." /></p>
             </div>
         </div>
-        
-        
+
+
 
     </body>
 </html>

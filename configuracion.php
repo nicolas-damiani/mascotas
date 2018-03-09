@@ -27,4 +27,7 @@ define('BASE', 'mascotas');
 
 $conn = new ConexionBD("mysql", HOST, BASE, USUARIO, CLAVE);
 
+
+
+
 ?>

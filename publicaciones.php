@@ -7,6 +7,8 @@ require_once("libs/funciones.php");
 require_once("libs/class.Conexion.BD.php");
 include_once("configuracion.php");
 
+$conn->conectar();
+$accion = "";
 
 $elementosPorPagina = 2;
 $pagina = 1;
@@ -19,78 +21,52 @@ if ($pagina < 1)
     $pagina = 1;
 // $pais = strlen($_POST["pais"]) ? $_POST["pais"] : $_GET["pais"];
 
-$conn->conectar();
-
-$sql = "select count(*) as cantidad from publicaciones";
-
-$conn->consulta($sql);
-
-$res = $conn->siguienteRegistro();
-
-$cantidadPaginas = (int) $res["cantidad"];
-
-$cantidadPaginas = ceil($cantidadPaginas / $elementosPorPagina);
-
-$conn->desconectar();
-
-$anterior = $pagina - 1 < 1 ? 1 : $pagina - 1;
-$siguiente = $pagina + 1 > $cantidadPaginas ? $cantidadPaginas : $pagina + 1;
-
-$conn->conectar();
-
-$sql = "select * from publicaciones order by id desc limit :offset, :cantidad";
-
-$param = array(
-    array("offset", ($pagina - 1) * $elementosPorPagina, "int"),
-    array("cantidad", $elementosPorPagina, "int"),
-);
-
-$conn->consulta($sql, $param);
-
-$resultado = $conn->restantesRegistros();
-
-$conn->desconectar();
-
-$paginacion = array();
-
-$paginacion[] = array("p" => 1, "texto" => "&lt;&lt;");
-$paginacion[] = array("p" => $anterior, "texto" => "&lt;");
-
-for ($i = 1; $i <= $cantidadPaginas; $i++) {
-
-    $paginacion[] = array("p" => $i, "texto" => "" . $i, "sel" => ($pagina == $i));
-}
-
-$paginacion[] = array("p" => $siguiente, "texto" => "&gt;");
-$paginacion[] = array("p" => $cantidadPaginas, "texto" => "&gt;&gt;");
 
 
 
-while (list($clave, $valor) = each($resultado)) {
+$resultado = cargarPaginacion($conn, $pagina, $elementosPorPagina);
+
+$publicaciones = $resultado['publicaciones'];
+
+$paginacion = $resultado['paginacion'];
+
+$especies = cargarEspecies($conn);
+
+$barrios = cargarBarrios($conn);
+
+
+
+while (list($clave, $valor) = each($publicaciones)) {
     if (strlen($valor["descripcion"]) > 150) {
-        $resultado[$clave]["descripcion"] = substr($valor["descripcion"], 0, 50) . "...";
+        $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 50) . "...";
     }
-    if ($resultado[$clave]["tipo"] == "E")
-        $resultado[$clave]["tipo"] = "Encontrado";
-    else if ($resultado[$clave]["tipo"] == "P")
-        $resultado[$clave]["tipo"] = "Perdido";
+    if ($publicaciones[$clave]["tipo"] == "E")
+        $publicaciones[$clave]["tipo"] = "Encontrado";
+    else if ($publicaciones[$clave]["tipo"] == "P")
+        $publicaciones[$clave]["tipo"] = "Perdido";
 }
 
-reset($resultado);
+reset($publicaciones);
 
+$conn->desconectar();
 /*
  * PROCESO EL CONTENIDO DEL TEMPLATE
  */
+
+
 if ($accion == "ajax") {
     // $smarty->display("tabla.tpl");
 
     sleep(1);
-    echo json_encode($resultado);
+    echo json_encode($publicaciones);
 } else {
-    $smarty->assign("publicaciones", $resultado);
+    $smarty->assign("publicaciones", $publicaciones);
+    $smarty->assign("especies", $especies);
+    $smarty->assign("barrios", $barrios);
     $smarty->assign("paginacion", $paginacion);
     $smarty->assign("p", $pagina);
-
-    $smarty->display("publicaciones.tpl.html");
+    
+    $smarty->display("publicaciones.tpl");
 }
+
 
