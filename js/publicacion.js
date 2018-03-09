@@ -30,7 +30,7 @@ function nuevaPregunta(textoPregunta, idPublicacion) {
             //cargando();
         }
     }).done(function (data) {
-        if (data == "ok") {
+        if (data.status == "ok") {
             location.reload();
         }
     })

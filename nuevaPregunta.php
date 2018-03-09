@@ -20,8 +20,8 @@ $sql = "insert into preguntas(id_publicacion, texto, usuario_id) values(:id_publ
 $conn->consulta($sql, $param);
 
 if ($conn->ultimoIdInsert() > 0) {
-    $respuesta = "ok";
-    echo $respuesta;
+    $respuesta['status'] = "ok";
+    echo json_encode($respuesta);
 } else {
     $mensaje = "No se pudo guardar la pregunta";
 }
