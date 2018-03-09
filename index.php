@@ -18,6 +18,7 @@ $resultados = $conn->restantesRegistros();
 
 foreach($resultados as $res){
     $logins[$res["login"]] = $res["password"];
+    $logins[$res["login"]."_id"] = $res["id"];
 }
 
 // print_r($logins);
@@ -41,6 +42,7 @@ if(isset($_SESSION["user"])){
 if ($accion == "login") {
     if (isset($logins[$_POST["usuario"]]) && md5($_POST["password"]) == $logins[$_POST["usuario"]]) {
         $_SESSION["user"] = array(
+            "id_usuario" => $logins[$_POST["usuario"]."_id"],
             "nombre" => $_POST["usuario"],
             "addr" => $_SERVER["REMOTE_ADDR"],  
             "accesoLegible" => time_elapsed(time()),

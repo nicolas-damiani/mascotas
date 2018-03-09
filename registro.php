@@ -27,6 +27,7 @@ if ($accion == "registrar") {
 
         if ( $conn->ultimoIdInsert() > 0) {
             $_SESSION["user"] = array(
+                "id_usuario" => $conn->ultimoIdInsert(),
                 "nombre" => $_POST["usuario"],
                 "addr" => $_SERVER["REMOTE_ADDR"],  
                 "accesoLegible" => time_elapsed(time()),
