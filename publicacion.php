@@ -9,6 +9,8 @@ include_once("configuracion.php");
 
 $conn->conectar();
 
+
+
 if (!isset($_SESSION["user"])) {
     $usuario = false;
 } else {
@@ -16,7 +18,7 @@ if (!isset($_SESSION["user"])) {
 }
 
 $param = array(
-    array("id", $_GET["publicacion"], "int")
+    array("id", $_GET["publicacion"], "int"),
 );
 
 $sql = "select * from publicaciones where id = :id";
@@ -65,13 +67,15 @@ reset($preguntas);
 
 
 
+
+
 $smarty->assign("publicacion", $publicacion);
 $smarty->assign("especie", $especie);
 $smarty->assign("preguntas", $preguntas);
 $smarty->assign("usuario", $usuario);
-
 /*
  * ENVIO EL TEMPLATE AL CLIENTE
  */
-$smarty->display('publicacion.tpl.html');
+$smarty->display('publicacion.tpl');
+
 

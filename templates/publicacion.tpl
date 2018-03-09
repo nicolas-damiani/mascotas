@@ -7,13 +7,19 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="js/publicacion.js"></script>
         <script>
             $(document).ready(function () {
-
+                $('#nuevaPregunta').on({
+                    'click': function () {
+                        $('#contenedorNuevaPregunta').style('display','block');
+                    }
+                });
             });
         </script>
     </head>
     <body>
+        <div id="idPublicacion" style="display: none">{$publicacion.id}</div>
         <h1>{$publicacion.titulo}</h1>
 
         <div class="fila">
@@ -29,18 +35,23 @@
         <p>{$publicacion.descripcion}</p>
 
         <ul>{foreach from=$preguntas item=pregunta}
-        <div class="pregunta">Pregunta: {$pregunta.texto} <br></div>
-        <div class="respuesta">Respuesta: {$pregunta.respuesta} <br><br><br></div>
-        {/foreach}
+            <div class="pregunta">Pregunta: {$pregunta.texto} <br></div>
+            <div class="respuesta">Respuesta: {$pregunta.respuesta} <br><br><br></div>
+            {/foreach}
         </ul>
-        
+
         {if !$usuario}
         <a href="login.php">Inicia sesión para realizar una pregunta</a>
         {else}
-        <a href="index.php">Nueva pregunta</a>
+        <div id="nuevaPregunta">Nueva pregunta</div>
         {/if}
-    <p>
-        <a href="noticias.php">Volver a las noticias</a>
-    </p>
-</body>
+
+        <div id="contenedorNuevaPregunta" style="display: none;">
+            <input type="text" id="textoPregunta">
+            <input type="button" id="realizarPregunta" value="PREGUNTAR">
+        </div>
+        <p>
+            <a href="noticias.php">Volver a las noticias</a>
+        </p>
+    </body>
 </html>
