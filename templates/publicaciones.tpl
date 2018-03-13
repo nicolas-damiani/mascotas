@@ -11,8 +11,8 @@
         <link href="css/publicaciones.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        
-        
+
+
         <h1>PUBLICACIONES</h1>
         <div id="p" style="display: none">{$p}</div>
         <div class="buscadorBtn">Buscador</div>
@@ -30,7 +30,7 @@
                 <select id="filtroEspecie" class="filtroSelect">
                     <option value="0">No especifica</option>
                     {foreach from=$especies item=valor key=clave}
-                    <option value="{$valor.id}">{$valor.nombre}</option>
+                        <option value="{$valor.id}">{$valor.nombre}</option>
                     {/foreach}
                 </select>
             </div>
@@ -45,9 +45,17 @@
                 <select id="filtroBarrio" class="filtroSelect">
                     <option value="0">No especifica</option>
                     {foreach from=$barrios item=valor key=clave}
-                    <option value="{$valor.id}">{$valor.nombre}</option>
+                        <option value="{$valor.id}">{$valor.nombre}</option>
                     {/foreach}
                 </select>
+            </div>
+            <div class="filtro">
+                <div class="filtroTitulo">Palabras claves</div>
+                <input id="filtroPalabras" type="text" name="fname">
+            </div>    
+
+            <div id="filtrarBtn">
+                Filtrar
             </div>
 
         </div>
@@ -67,11 +75,11 @@
                     </th>
                 </tr>
                 {foreach from=$publicaciones item=valor key=clave}
-                <tr>
-                    <td><a target="_blank" href="publicacion.php?publicacion={$valor.id}">{$valor.titulo}</a></td>
-                    <td>{$valor.descripcion}</td>
-                    <td>{$valor.tipo}</td>
-                </tr>
+                    <tr>
+                        <td><a target="_blank" href="publicacion.php?publicacion={$valor.id}">{$valor.titulo}</a></td>
+                        <td>{$valor.descripcion}</td>
+                        <td>{$valor.tipo}</td>
+                    </tr>
                 {/foreach}
             </table>
         </div>
