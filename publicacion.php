@@ -14,6 +14,10 @@ if (isset($_POST['accion'])) {
         if (isset($_POST['idPublicacion']) && isset($_POST['texto'])) {
             nuevaPregunta($conn, $_POST['idPublicacion'], $_POST['texto']);
         }
+    }else if($_POST['accion'] == "nuevaPublicacion"){
+        if(isset($_POST['tipo']) && isset($_POST['especie']) &&isset($_POST['raza']) && isset($_POST['titulo']) && isset($_POST['descripcion'])){
+            nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion']);
+        }
     }
 } else {
 

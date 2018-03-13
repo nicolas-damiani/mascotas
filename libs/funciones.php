@@ -113,3 +113,31 @@ function nuevaPregunta($conn, $idPublicacion, $texto) {
 
     $conn->desconectar();
 }
+
+function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion){
+    $conn->conectar();
+
+    $param = array(
+        array("tipo", $tipo, "string"),
+        array("especie_id", $especieId, "int"),
+        array("raza_id", $razaId, "int"),
+        array("barrio_id", $barrioId, "int"),
+        array("titulo", $titulo, "string"),
+        array("abierto", 1, "bool"),
+        array("descripcion", $descripcion, "string"),
+        array("usuario_id", $_SESSION['user']['id_usuario'], "int"),
+    );
+
+    $sql = "insert into preguntas(id_publicacion, texto, usuario_id) values(:id_publicacion, :texto, :usuario_id)";
+
+    $conn->consulta($sql, $param);
+
+    if ($conn->ultimoIdInsert() > 0) {
+        $respuesta['status'] = "ok";
+        echo json_encode($respuesta);
+    } else {
+        $mensaje = "No se pudo guardar la pregunta";
+    }
+
+    $conn->desconectar();
+}
