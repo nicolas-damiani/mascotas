@@ -21,16 +21,16 @@ $(document).ready(function () {
 function nuevaPregunta(textoPregunta, idPublicacion) {
 
     $.ajax({
-        url: "nuevaPregunta.php",
+        url: "publicacion.php",
         dataType: "json",
         type: "POST",
-        data: "texto=" + textoPregunta + "&publicacion=" + idPublicacion,
+        data: "accion=nuevaPregunta&texto=" + textoPregunta + "&idPublicacion=" + idPublicacion,
         timeout: 2000,
         beforeSend: function () {
             //cargando();
         }
     }).done(function (data) {
-        if (data == "ok") {
+        if (data.status == "ok") {
             location.reload();
         }
     })

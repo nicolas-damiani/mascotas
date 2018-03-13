@@ -2,9 +2,6 @@
 
 require_once("libs/class.Conexion.BD.php");
 
-
-
-
 function time_elapsed($secs) {
     $bit = array(
         'y' => $secs / 31556926 % 12,
@@ -42,6 +39,7 @@ function cargarBarrios($conn) {
     return $barrios;
 }
 
+
 function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
     
 
@@ -72,7 +70,7 @@ function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
 
     $publicaciones = $conn->restantesRegistros();
 
-    
+
 
     $paginacion = array();
 
@@ -85,15 +83,14 @@ function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
 
     $paginacion[] = array("p" => $siguiente, "texto" => "&gt;");
     $paginacion[] = array("p" => $cantidadPaginas, "texto" => "&gt;&gt;");
-    
+
     $resultado = array();
     $resultado['paginacion'] = $paginacion;
     $resultado['publicaciones'] = $publicaciones;
-        
-    
+
+
     return $resultado;
 }
-
 
 function getRazasPorEspecie($conn, $especieId){
     $sql = "select * from razas where especie_id = :especie_id";
@@ -190,4 +187,28 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
         
     
     return $resultado;
+}
+
+
+function nuevaPregunta($conn, $idPublicacion, $texto) {
+    $conn->conectar();
+
+    $param = array(
+        array("id_publicacion", $idPublicacion, "int"),
+        array("texto", $texto, "string"),
+        array("usuario_id", $_SESSION['user']['id_usuario'], "int"),
+    );
+
+    $sql = "insert into preguntas(id_publicacion, texto, usuario_id) values(:id_publicacion, :texto, :usuario_id)";
+
+    $conn->consulta($sql, $param);
+
+    if ($conn->ultimoIdInsert() > 0) {
+        $respuesta['status'] = "ok";
+        echo json_encode($respuesta);
+    } else {
+        $mensaje = "No se pudo guardar la pregunta";
+    }
+
+    $conn->desconectar();
 }

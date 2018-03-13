@@ -1,4 +1,4 @@
-<?php
+<?php/*
 session_start();
 
 //INCLUYO LA CONFIGURACION DE SAMRTY
@@ -36,6 +36,7 @@ if ($accion == "login") {
 
     if ( $resultado = $conn->siguienteRegistro()) {
         $_SESSION["user"] = array(
+            "id_usuario" => $resultado["id"],
             "nombre" => $resultado["login"],
             "addr" => $_SERVER["REMOTE_ADDR"],  
             "accesoLegible" => time_elapsed(time()),
@@ -59,7 +60,7 @@ if ($accion == "login") {
 
 /*
  * PROCESO EL CONTENIDO DEL TEMPLATE
- */
+ 
 $smarty->assign("user", $_SESSION["user"]);
 $smarty->assign("mensaje", $mensaje);
 $smarty->assign("logueado", isset($_SESSION["user"]));
@@ -68,7 +69,7 @@ $smarty->assign("inactividad", $inactividad);
 
 /*
  * ENVIO EL TEMPLATE AL CLIENTE
- */
+ 
 $smarty->display('login.tpl.html');
-
+*/
 ?>
