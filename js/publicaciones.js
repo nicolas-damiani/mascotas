@@ -1,5 +1,7 @@
 var razas = [];
 var pagina = "";
+var filtros = {tipo: 0, especie: 0, raza: 0, barrio: 0, palabras: ""};
+var isFiltered = false;
 
 
 $(document).ready(function () {
@@ -8,20 +10,26 @@ $(document).ready(function () {
     $('#filtroEspecie').on('change', function () {
         cargarRazasSelector(this.value);
     })
+    $('#filtrarBtn').on('click', function () {
+        filtros.tipo = $("#filtroTipo").val();
+        filtros.especie = $("#filtroEspecie").val();
+        filtros.raza = $("#filtroRaza").val();
+        filtros.barrio = $("#filtroBarrio").val();
+        filtros.palabras = $("#filtroPalabras").val();
+        filtrarPublicaciones(1);
+        isFiltered = true;
+    })
 
-
-    pagina = $('p').text();
-    razas = JSON.parse($('razas').text());
-
-    for (var i = 0; i < razas.length; i++) {
-
-    }
 });
 
 function comportamientoInicial() {
     $("#paginacion a").click(function (e) {
         e.preventDefault();
-        cargarPagina($(this).attr("alt"));
+        if (!isFiltered) {
+            cargarPagina($(this).attr("alt"));
+        } else {
+            filtrarPublicaciones($(this).attr("alt"));
+        }
     });
 }
 
@@ -99,6 +107,39 @@ function cargando() {
         open: function (event, ui) {
             $("#dialog-cargando").parent().find(".ui-dialog-titlebar").hide();
         }
+    });
+
+}
+
+
+function filtrarPublicaciones(p) {
+    pagina = p;
+    $.ajax({
+        url: "publicaciones.php",
+        dataType: "json",
+        type: "POST",
+        data: "accion=filtro&p="+pagina+"&tipo=" + filtros.tipo + "&especie=" + filtros.especie + "&raza=" + filtros.raza + "&barrio=" + filtros.barrio + "&palabras=" + filtros.palabras,
+        timeout: 2000,
+        beforeSend: function () {
+            //      cargando();
+        }
+    }).done(function (data) {
+        var tabla = $(".cuerpo table").empty();
+
+        var tr = $("<tr />");
+        tr.append($("<th />").html("Título"));
+        tr.append($("<th />").html("Descripción"));
+        tr.append($("<th />").html("Tipo"));
+        tabla.append(tr);
+
+        for (var i = 0; i < data.length; i++) {
+            tr = $("<tr />");
+            tr.append($("<td />").html(data[i].titulo));
+            tr.append($("<td />").html(data[i].descripcion));
+            tr.append($("<td />").html(data[i].tipo));
+            tabla.append(tr);
+        }
+
     });
 
 }

@@ -10,63 +10,80 @@ include_once("configuracion.php");
 $conn->conectar();
 $accion = "";
 
-$elementosPorPagina = 2;
-$pagina = 1;
-if (isset($_POST["accion"]) && $_POST["p"]) {
-    $accion = strlen($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
-    $pagina = strlen($_POST["p"]) ? $_POST["p"] : $_GET["p"];
-    $pagina = (int) $pagina;
-}
-if ($pagina < 1)
+if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
+    if (isset($_POST["especie"])) {
+        $especieId = $_POST["especie"];
+        $razas = getRazasPorEspecie($conn, $especieId);
+        echo json_encode($razas);
+    }
+} else {
+
+    $elementosPorPagina = 2;
     $pagina = 1;
+    if (isset($_POST["accion"]) && $_POST["p"]) {
+        $accion = strlen($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
+        $pagina = strlen($_POST["p"]) ? $_POST["p"] : $_GET["p"];
+        $pagina = (int) $pagina;
+    }
+    if ($pagina < 1)
+        $pagina = 1;
 // $pais = strlen($_POST["pais"]) ? $_POST["pais"] : $_GET["pais"];
 
 
-
-
-$resultado = cargarPaginacion($conn, $pagina, $elementosPorPagina);
-
-$publicaciones = $resultado['publicaciones'];
-
-$paginacion = $resultado['paginacion'];
-
-$especies = cargarEspecies($conn);
-
-$barrios = cargarBarrios($conn);
-
-
-
-while (list($clave, $valor) = each($publicaciones)) {
-    if (strlen($valor["descripcion"]) > 150) {
-        $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 50) . "...";
+    $resultado = array();
+    if (isset($_POST["accion"]) && $_POST["accion"] == "filtro") {
+        $filtros = $_POST;
+        $resultado = cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros);
+    }else{
+        $resultado = cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina);
     }
-    if ($publicaciones[$clave]["tipo"] == "E")
-        $publicaciones[$clave]["tipo"] = "Encontrado";
-    else if ($publicaciones[$clave]["tipo"] == "P")
-        $publicaciones[$clave]["tipo"] = "Perdido";
-}
-
-reset($publicaciones);
-
-$conn->desconectar();
-/*
- * PROCESO EL CONTENIDO DEL TEMPLATE
- */
-
-
-if ($accion == "ajax") {
-    // $smarty->display("tabla.tpl");
-
-    sleep(1);
-    echo json_encode($publicaciones);
-} else {
-    $smarty->assign("publicaciones", $publicaciones);
-    $smarty->assign("especies", $especies);
-    $smarty->assign("barrios", $barrios);
-    $smarty->assign("paginacion", $paginacion);
-    $smarty->assign("p", $pagina);
     
-    $smarty->display("publicaciones.tpl");
+    $publicaciones = $resultado['publicaciones'];
+
+    $paginacion = $resultado['paginacion'];
+
+    
+    
+    $especies = cargarEspecies($conn);
+
+    $barrios = cargarBarrios($conn);
+
+
+
+    while (list($clave, $valor) = each($publicaciones)) {
+        if (strlen($valor["descripcion"]) > 150) {
+            $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 50) . "...";
+        }
+        if ($publicaciones[$clave]["tipo"] == "E")
+            $publicaciones[$clave]["tipo"] = "Encontrado";
+        else if ($publicaciones[$clave]["tipo"] == "P")
+            $publicaciones[$clave]["tipo"] = "Perdido";
+    }
+
+    reset($publicaciones);
+
+    $conn->desconectar();
+    /*
+     * PROCESO EL CONTENIDO DEL TEMPLATE
+     */
+
+    
+    
+    
+    if ($accion == "ajax") {
+        // $smarty->display("tabla.tpl");
+
+        sleep(1);
+        echo json_encode($publicaciones);
+    } else {
+        $smarty->assign("publicaciones", $publicaciones);
+        $smarty->assign("especies", $especies);
+        $smarty->assign("barrios", $barrios);
+        $smarty->assign("paginacion", $paginacion);
+        $smarty->assign("p", $pagina);
+
+        $smarty->display("publicaciones.tpl");
+    }
 }
 
 

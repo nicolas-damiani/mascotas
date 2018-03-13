@@ -39,8 +39,9 @@ function cargarBarrios($conn) {
     return $barrios;
 }
 
-function cargarPaginacion($conn, $pagina, $elementosPorPagina) {
 
+function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
+    
 
     $sql = "select count(*) as cantidad from publicaciones";
 
@@ -90,6 +91,104 @@ function cargarPaginacion($conn, $pagina, $elementosPorPagina) {
 
     return $resultado;
 }
+
+function getRazasPorEspecie($conn, $especieId){
+    $sql = "select * from razas where especie_id = :especie_id";
+    
+    $param = array(
+        array("especie_id", $especieId, "int"),
+    );
+    
+    $conn->consulta($sql, $param);
+    $razas = $conn->restantesRegistros();
+    return $razas;
+    
+}
+
+
+function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros) {
+    
+    $conditions = "";
+    $hasOneAdded = false;
+    if ($filtros['tipo']!=0){
+        $hasOneAdded = true;
+        $conditions.=" tipo = ".$filtros['tipo'];
+    }
+    if ($filtros['especie']!=0)
+        if ($hasOneAdded){
+            $conditions.=" AND ";
+        }else{
+            $hasOneAdded = true;
+        }
+        $conditions.=" especie_id = ".$filtros['especie'];
+    if ($filtros['barrio']!=0){
+        if ($hasOneAdded){
+            $conditions.=" AND ";
+        }else{
+            $hasOneAdded = true;
+        }
+        $conditions.=" barrio_id = ".$filtros['barrio'];
+    }
+    if ($filtros['raza']!=0){
+        if ($hasOneAdded){
+            $conditions.=" AND ";
+        }else{
+            $hasOneAdded = true;
+        }
+        $conditions.=" raza_id = ".$filtros['raza'];
+    }
+    
+    $sql = "select count(*) as cantidad from publicaciones where ".$conditions;
+    
+     
+
+    $conn->consulta($sql);
+
+    $res = $conn->siguienteRegistro();
+
+    $cantidadPaginas = (int) $res["cantidad"];
+
+    $cantidadPaginas = ceil($cantidadPaginas / $elementosPorPagina);
+
+
+    $anterior = $pagina - 1 < 1 ? 1 : $pagina - 1;
+    $siguiente = $pagina + 1 > $cantidadPaginas ? $cantidadPaginas : $pagina + 1;
+
+
+
+    $sql = "select * from publicaciones where ".$conditions. " order by id desc limit :offset, :cantidad";
+
+    $param = array(
+        array("offset", ($pagina - 1) * $elementosPorPagina, "int"),
+        array("cantidad", $elementosPorPagina, "int"),
+    );
+
+    $conn->consulta($sql, $param);
+
+    $publicaciones = $conn->restantesRegistros();
+
+    
+
+    $paginacion = array();
+
+    $paginacion[] = array("p" => 1, "texto" => "&lt;&lt;");
+    $paginacion[] = array("p" => $anterior, "texto" => "&lt;");
+
+    for ($i = 1; $i <= $cantidadPaginas; $i++) {
+        $paginacion[] = array("p" => $i, "texto" => "" . $i, "sel" => ($pagina == $i));
+    }
+
+    $paginacion[] = array("p" => $siguiente, "texto" => "&gt;");
+    $paginacion[] = array("p" => $cantidadPaginas, "texto" => "&gt;&gt;");
+    
+    $resultado = array();
+    $resultado['paginacion'] = $paginacion;
+    $resultado['publicaciones'] = $publicaciones;
+        
+    
+    return $resultado;
+}
+
 
 function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->conectar();
