@@ -14,12 +14,18 @@ if (isset($_POST['accion'])) {
         if (isset($_POST['tipo']) && isset($_POST['especie']) && isset($_POST['raza']) && isset($_POST['titulo']) && isset($_POST['descripcion'])) {
             nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion']);
         }
+    } else if ($_POST['accion'] == "cargarRazas") {
+        if (isset($_POST["especie"])) {
+            $especieId = $_POST["especie"];
+            $razas = getRazasPorEspecie($conn, $especieId);
+            echo json_encode($razas);
+        }
     }
 } else {
 
-    
+
     $usuario = $_SESSION["user"];
-    
+
 
     $conn->consulta("select * from barrios");
     $barrios = $conn->restantesRegistros();

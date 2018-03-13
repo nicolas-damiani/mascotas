@@ -227,7 +227,7 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
         array("usuario_id", $_SESSION['user']['id_usuario'], "int"),
     );
 
-    $sql = "insert into preguntas(id_publicacion, texto, usuario_id) values(:id_publicacion, :texto, :usuario_id)";
+    $sql = "insert into publicaciones(tipo, especie_id, raza_id, barrio_id, titulo, abierto, descripcion, usuario_id) values(:tipo, :especie_id, :raza_id, :barrio_id, :titulo, :abierto, :descripcion, :usuario_id)";
 
     $conn->consulta($sql, $param);
 
