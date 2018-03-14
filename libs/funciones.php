@@ -39,9 +39,8 @@ function cargarBarrios($conn) {
     return $barrios;
 }
 
-
 function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
-    
+
 
     $sql = "select count(*) as cantidad from publicaciones";
 
@@ -92,55 +91,62 @@ function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
     return $resultado;
 }
 
-function getRazasPorEspecie($conn, $especieId){
+function getRazasPorEspecie($conn, $especieId) {
     $sql = "select * from razas where especie_id = :especie_id";
-    
+
     $param = array(
         array("especie_id", $especieId, "int"),
     );
-    
+
     $conn->consulta($sql, $param);
     $razas = $conn->restantesRegistros();
     return $razas;
-    
 }
-
 
 function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros) {
     
+
     $conditions = "";
     $hasOneAdded = false;
-    if ($filtros['tipo']!=0){
+    if ($filtros['tipo'] !== "0") {
         $hasOneAdded = true;
-        $conditions.=" tipo = ".$filtros['tipo'];
+        $conditions .= " tipo = '" . $filtros['tipo']."'";
     }
-    if ($filtros['especie']!=0)
-        if ($hasOneAdded){
-            $conditions.=" AND ";
-        }else{
+    if ($filtros['especie'] !== "0") {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
             $hasOneAdded = true;
         }
-        $conditions.=" especie_id = ".$filtros['especie'];
-    if ($filtros['barrio']!=0){
-        if ($hasOneAdded){
-            $conditions.=" AND ";
-        }else{
-            $hasOneAdded = true;
-        }
-        $conditions.=" barrio_id = ".$filtros['barrio'];
+        $conditions .= " especie_id = " . $filtros['especie'];
     }
-    if ($filtros['raza']!=0){
-        if ($hasOneAdded){
-            $conditions.=" AND ";
-        }else{
+    if ($filtros['barrio'] !== "0") {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
             $hasOneAdded = true;
         }
-        $conditions.=" raza_id = ".$filtros['raza'];
+        $conditions .= " barrio_id = " . $filtros['barrio'];
+    }
+    if ($filtros['raza'] !== "0") {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
+            $hasOneAdded = true;
+        }
+        $conditions .= " raza_id = " . $filtros['raza'];
+    }
+
+    
+    if ($conditions!== ""){
+        $sql = "select count(*) as cantidad from publicaciones where " . $conditions;
+    }else{
+        $sql = "select count(*) as cantidad from publicaciones ";
     }
     
-    $sql = "select count(*) as cantidad from publicaciones where ".$conditions;
     
-     
+
+
 
     $conn->consulta($sql);
 
@@ -155,8 +161,11 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     $siguiente = $pagina + 1 > $cantidadPaginas ? $cantidadPaginas : $pagina + 1;
 
 
-
-    $sql = "select * from publicaciones where ".$conditions. " order by id desc limit :offset, :cantidad";
+    if ($conditions!=""){
+        $sql = "select * from publicaciones where " . $conditions . " order by id desc limit :offset, :cantidad";
+    }else{
+        $sql = "select * from publicaciones order by id desc limit :offset, :cantidad";
+    }
 
     $param = array(
         array("offset", ($pagina - 1) * $elementosPorPagina, "int"),
@@ -167,7 +176,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
     $publicaciones = $conn->restantesRegistros();
 
-    
+
 
     $paginacion = array();
 
@@ -180,15 +189,14 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
     $paginacion[] = array("p" => $siguiente, "texto" => "&gt;");
     $paginacion[] = array("p" => $cantidadPaginas, "texto" => "&gt;&gt;");
-    
+
     $resultado = array();
     $resultado['paginacion'] = $paginacion;
     $resultado['publicaciones'] = $publicaciones;
-        
-    
+
+
     return $resultado;
 }
-
 
 function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->conectar();
