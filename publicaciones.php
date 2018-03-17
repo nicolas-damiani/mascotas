@@ -24,6 +24,10 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
         $accion = strlen($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
         $pagina = strlen($_POST["p"]) ? $_POST["p"] : $_GET["p"];
         $pagina = (int) $pagina;
+    }else if(isset($_GET["p"])) {
+        $pagina = $_GET["p"];
+        $pagina = (int) $pagina;
+        die($_GET["p"]);
     }
     if ($pagina < 1)
         $pagina = 1;
@@ -32,6 +36,7 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
 
     $resultado = array();
     if (isset($_POST["accion"]) && $_POST["accion"] == "filtro") {
+        $accion = "filtro";
         $filtros = $_POST;
         $resultado = cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros);
     }else{
@@ -68,9 +73,10 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
      */
 
     
-    
-    
-    if ($accion == "ajax") {
+    if ($accion == "filtro"){
+        
+        echo json_encode($resultado);
+    }else if ($accion == "ajax") {
         // $smarty->display("tabla.tpl");
 
         sleep(1);

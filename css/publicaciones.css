@@ -1,3 +1,7 @@
 .tablaPublicaciones{
     width: 80%;
 }
+
+#filtrarBtn{
+    cursor: pointer;
+}

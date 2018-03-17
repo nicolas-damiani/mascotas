@@ -136,6 +136,14 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
         }
         $conditions .= " raza_id = " . $filtros['raza'];
     }
+    if ($filtros['palabras'] !== "") {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
+            $hasOneAdded = true;
+        }
+        $conditions .= " ( titulo LIKE '%" . $filtros['palabras']. "%' OR descripcion LIKE '%". $filtros['palabras']. "%')";
+    }
 
     
     if ($conditions!== ""){
@@ -249,4 +257,63 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
 
     $conn->desconectar();
 }
+
+function cargarPublicacionesPorEspecie($conn) {
+
+    $sql = "SELECT e.nombre, count(e.id) as cantidad from especies e, publicaciones p where p.especie_id = e.id group by p.especie_id ";
+    $conn->consulta($sql);
+    $publicacionesPorEspecie = $conn->restantesRegistros();
+
+    return $publicacionesPorEspecie;
+}
+
+
+function cargarPublicacionesPorAbierto($conn) {
+
+    $resultado = array();
+    
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE abierto =1 ";
+    $conn->consulta($sql);
+    $publicacionesPorAbierto = $conn->restantesRegistros();
+    
+    while (list($clave, $valor) = each($publicacionesPorAbierto)) {
+           $resultado['abierto'] = $publicacionesPorAbierto[$clave]['cantidad'];
+    }
+    reset($publicacionesPorAbierto);
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE abierto = 0";
+    $conn->consulta($sql);
+    $publicacionesCerrado = $conn->restantesRegistros();
+    while (list($clave, $valor) = each($publicacionesCerrado)) {
+           $resultado['cerrado'] = $publicacionesCerrado[$clave]['cantidad'];
+    }
+    reset($publicacionesCerrado);
+    
+    
+    return $resultado;
+}
+
+function cargarPublicacionesPorExitoso($conn) {
+
+    $resultado = array();
+    
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE exitoso =1 ";
+    $conn->consulta($sql);
+    $publicacionesPorExitoso = $conn->restantesRegistros();
+    
+    while (list($clave, $valor) = each($publicacionesPorExitoso)) {
+           $resultado['exitosas'] = $publicacionesPorExitoso[$clave]['cantidad'];
+    }
+    reset($publicacionesPorExitoso);
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE exitoso is NULL";
+    $conn->consulta($sql);
+    $publicacionesNoExitosas = $conn->restantesRegistros();
+    while (list($clave, $valor) = each($publicacionesNoExitosas)) {
+           $resultado['noExitosas'] = $publicacionesNoExitosas[$clave]['cantidad'];
+    }
+    reset($publicacionesNoExitosas);
+    
+    
+    return $resultado;
+}
+
 

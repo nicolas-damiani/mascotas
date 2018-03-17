@@ -44,7 +44,7 @@ function cargarPagina(p) {
         data: "accion=ajax&p=" + p,
         timeout: 2000,
         beforeSend: function () {
-            cargando();
+            //  cargando();
         }
     }).done(function (data) {
         var tabla = $(".cuerpo table").empty();
@@ -63,10 +63,8 @@ function cargarPagina(p) {
             tabla.append(tr);
         }
 
-        $(cargandoDialog).dialog("close");
+        //     $(cargandoDialog).dialog("close");
         // cambiar la pagina seleccionada
-        $("#paginacion a.sel").removeClass("sel");
-        $("#paginacion a").eq(parseInt(pagina) - 1).addClass("sel");
     });
 
 }
@@ -118,28 +116,62 @@ function filtrarPublicaciones(p) {
         url: "publicaciones.php",
         dataType: "json",
         type: "POST",
-        data: "accion=filtro&p="+pagina+"&tipo=" + filtros.tipo + "&especie=" + filtros.especie + "&raza=" + filtros.raza + "&barrio=" + filtros.barrio + "&palabras=" + filtros.palabras,
+        data: "accion=filtro&p=" + pagina + "&tipo=" + filtros.tipo + "&especie=" + filtros.especie + "&raza=" + filtros.raza + "&barrio=" + filtros.barrio + "&palabras=" + filtros.palabras,
         timeout: 2000,
         beforeSend: function () {
             //      cargando();
         }
     }).done(function (data) {
-        var tabla = $(".cuerpo table").empty();
 
-        var tr = $("<tr />");
-        tr.append($("<th />").html("Título"));
-        tr.append($("<th />").html("Descripción"));
-        tr.append($("<th />").html("Tipo"));
-        tabla.append(tr);
+        var publicaciones = data.publicaciones;
 
-        for (var i = 0; i < data.length; i++) {
-            tr = $("<tr />");
-            tr.append($("<td />").html(data[i].titulo));
-            tr.append($("<td />").html(data[i].descripcion));
-            tr.append($("<td />").html(data[i].tipo));
-            tabla.append(tr);
-        }
+        cargarTablaPublicaciones(publicaciones);
+        var paginacion = data.paginacion;
+
+        cargarPaginacion(paginacion);
 
     });
 
+}
+
+function cargarTablaPublicaciones(publicaciones) {
+    var tabla = $(".cuerpo table").empty();
+
+    var tr = $("<tr />");
+    tr.append($("<th />").html("Título"));
+    tr.append($("<th />").html("Descripción"));
+    tr.append($("<th />").html("Tipo"));
+    tabla.append(tr);
+
+    for (var i = 0; i < publicaciones.length; i++) {
+        tr = $("<tr />");
+        tr.append($("<td />").html("<a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + publicaciones[i].titulo + "</a>"));
+        tr.append($("<td />").html(publicaciones[i].descripcion));
+        tr.append($("<td />").html(publicaciones[i].tipo));
+        tabla.append(tr);
+    }
+}
+
+function cargarPaginacion(paginacion) {
+    var tabla = $("#paginacion").empty();
+    var paginacionInterna;
+
+    for (var i = 0; i < paginacion.length; i++) {
+        //   paginacionInterna = "<li><a href='?p=" + paginacion[i].p + "' alt='" + paginacion[i].p + "'>" + paginacion[i].texto + "</a></li>"
+        paginacionInterna = "<li><a href='?p=" + paginacion[i].p + "' alt='" + paginacion[i].p + "'>" + paginacion[i].texto + "</a></li>"
+
+
+        tabla.append(paginacionInterna);
+    }
+
+    $("#paginacion a").click(function (e) {
+        e.preventDefault();
+        if (!isFiltered) {
+            cargarPagina($(this).attr("alt"));
+        } else {
+            filtrarPublicaciones($(this).attr("alt"));
+        }
+    });
+    ///   $("#paginacion a.sel").removeClass("sel");
+    //   $("#paginacion a").eq(parseInt(pagina) - 1).addClass("sel");
 }

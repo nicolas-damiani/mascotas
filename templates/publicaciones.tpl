@@ -21,8 +21,8 @@
                 <div class="filtroTitulo">Tipo</div>
                 <select id="filtroTipo" class="filtroSelect">
                     <option value="0">No especifica</option>
-                    <option value="Perdido">Perdido</option>
-                    <option value="Encontrado">Encontrado</option>
+                    <option value="P">Perdido</option>
+                    <option value="E">Encontrado</option>
                 </select>
             </div>
             <div class="filtro">
