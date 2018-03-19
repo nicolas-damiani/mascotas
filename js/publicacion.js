@@ -4,30 +4,48 @@ $(document).ready(function () {
             $('#contenedorNuevaPregunta').css('display', 'block');
         }
     });
-    
+
     $('#cerrarPublicacion').on({
         'click': function () {
             cerrarPublicacion();
         }
     });
-    
+
+    $('#pdf').on({
+        'click': function () {
+            var doc = new jsPDF();
+
+            doc.text(10, 10, "Titulo: " + $('#tituloPublicacion').html());
+            doc.text(10, 20, "Estado: " + $('#estadoPublicacion').html());
+            doc.text(10, 30, "Especie: " + $('#especiePublicacion').html());
+            doc.text(10, 40, 'Descripcion' + $('#descripcionPublicacion').html());
+
+            var position = 50;
+            $('.imagenPublicacion').each(function (index) {
+                doc.addImage(this, 'png', 10, position);
+                position += 60;
+            });
+            doc.save('Test.pdf');
+        }
+    });
+
     $('#exportar').on({
         'click': function () {
             exportarPublicacion();
         }
     });
-    
+
 
     $('#imagenesPublicacion').slick({
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2600,
-                dots: true,
-                arrows: false,
-             //   appendDots: $('#circle')
-          //      prevArrow: '<img class="slick-prev" src="/files/layouts/leftArrowColor.png" style="display: block;height: 38px;position: absolute;top: 41%;margin-bottom: 0px;margin-left: 18px;z-index: 2;" />',
-           //     nextArrow: '<img class="slick-next" src="/files/layouts/rightArrowColor.png" style="display: block;height: 38px;position: absolute;float: right;margin-right: 21px;z-index: 2;right: 0;top: 41%;"/>'
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2600,
+        dots: true,
+        arrows: false,
+        //   appendDots: $('#circle')
+        //      prevArrow: '<img class="slick-prev" src="/files/layouts/leftArrowColor.png" style="display: block;height: 38px;position: absolute;top: 41%;margin-bottom: 0px;margin-left: 18px;z-index: 2;" />',
+        //     nextArrow: '<img class="slick-next" src="/files/layouts/rightArrowColor.png" style="display: block;height: 38px;position: absolute;float: right;margin-right: 21px;z-index: 2;right: 0;top: 41%;"/>'
     });
 
     $('#realizarPregunta').on({
@@ -43,7 +61,7 @@ $(document).ready(function () {
     });
 });
 
-function exportarPublicacion(){
+function exportarPublicacion() {
     $.ajax({
         url: "publicacion.php",
         dataType: "json",
@@ -56,20 +74,20 @@ function exportarPublicacion(){
     }).done(function (data) {
         if (data.status == "ok") {
             alert('publicacion cerrada');
-        }else{
+        } else {
             alert("error cerrando publicacion");
         }
     })
 }
 
-function cerrarPublicacion(){
+function cerrarPublicacion() {
     var exitoso = $('#selectExito').val();
     var idPublicacion = $('#idPublicacion').html();
     $.ajax({
         url: "publicacion.php",
         dataType: "json",
         type: "POST",
-        data: "accion=cerrarPublicacion&exitosa=" + exitoso+"&idPublicacion="+idPublicacion,
+        data: "accion=cerrarPublicacion&exitosa=" + exitoso + "&idPublicacion=" + idPublicacion,
         timeout: 2000,
         beforeSend: function () {
             //cargando();
@@ -77,7 +95,7 @@ function cerrarPublicacion(){
     }).done(function (data) {
         if (data.status == "ok") {
             alert('publicacion cerrada');
-        }else{
+        } else {
             alert("error cerrando publicacion");
         }
     })
