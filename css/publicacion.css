@@ -1,6 +1,6 @@
 
 .imagenPublicacion{
-   
+
     height: 160px;
 
 }
@@ -8,4 +8,10 @@
 #imagenesPublicacion{
     width: 40%;
     margin: 0px auto;
+}
+
+#map {
+    height: 400px;
+    width: 50%;
+    margin-top: 30px;
 }
