@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
 
         <link rel="stylesheet" type="text/css" href="css/publicacion.css"/>
-        <script type="text/javascript" src="/slick/slick.js"></script>
+        <script type="text/javascript" src="slick/slick.js"></script>
         <script type="text/javascript" src="js/publicacion.js"></script>
         <script type="text/javascript" src="js/jspdf.min.js"></script>
         <script>
@@ -29,7 +29,7 @@
         <div id="idPublicacion" style="display: none">{$publicacion.id}</div>
         <h1 id="tituloPublicacion">{$publicacion.titulo}</h1>
 
-        <div id="pdf">Download PDF</div>
+      
         
         <div class="fila">
             <div class="col1">
@@ -70,16 +70,9 @@
                 <input type="button" id="realizarPregunta" value="PREGUNTAR">
             </div>
 
-            <div>Creador: {$creador}</div>
-            <br>
-            <div>Cerrada: {$cerrada}</div>
-            <br>
-            <div>Exitosa: {$exitosa}</div>
 
-            <br>
-
-            <div id="exportar">
-                EXPORTAR
+            <div id="pdf">
+                EXPORTAR A PDF
             </div>
 
             {*            {if ($creador and !$cerrada)}*}

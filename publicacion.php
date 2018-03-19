@@ -35,7 +35,7 @@ if (isset($_POST['accion'])) {
         array("id", $_GET["publicacion"], "int"),
     );
 
-    $sql = "select * from publicaciones where id = :id";
+    $sql = "SELECT * from publicaciones where id = :id";
 
     $conn->consulta($sql, $param);
 
@@ -47,13 +47,13 @@ if (isset($_POST['accion'])) {
     }
 
     $cerrada = false;
-    if (((int) $publicacion['abierto'] == 0)) {
+ /*   if (((int) $publicacion['abierto'] == 0)) {
         $cerrada = true;
         $exitosa = false;
         if (((int) $publicacion['exitoso'] == 1)) {
             $exitosa = true;
         }
-    }
+    }*/
 
     /*
      * PROCESO EL CONTENIDO DEL TEMPLATE
@@ -121,8 +121,6 @@ if (isset($_POST['accion'])) {
     $smarty->assign("usuario", $usuario);
     $smarty->assign("creador", $creador);
 
-    $smarty->assign("cerrada", bindec($publicacion['abierto']));
-    $smarty->assign("exitosa", bindec($publicacion['exitoso']));
     /*
      * ENVIO EL TEMPLATE AL CLIENTE
      */
