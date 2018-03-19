@@ -247,15 +247,15 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
     $sql = "insert into publicaciones(tipo, especie_id, raza_id, barrio_id, titulo, abierto, descripcion, usuario_id) values(:tipo, :especie_id, :raza_id, :barrio_id, :titulo, :abierto, :descripcion, :usuario_id)";
 
     $conn->consulta($sql, $param);
-
+    $id;
     if ($conn->ultimoIdInsert() > 0) {
-        $respuesta['status'] = "ok";
-        echo json_encode($respuesta);
+        $id = $conn->ultimoIdInsert();
+        
     } else {
-        $mensaje = "No se pudo guardar la pregunta";
+        $id =  false;
     }
-
     $conn->desconectar();
+    return $id;
 }
 
 function cargarPublicacionesPorEspecie($conn) {

@@ -73,12 +73,19 @@
                     <th>
                         Tipo
                     </th>
+                    <th>
+                        Imagen
+                    </th>
+                    
                 </tr>
                 {foreach from=$publicaciones item=valor key=clave}
                     <tr>
                         <td><a target="_blank" href="publicacion.php?publicacion={$valor.id}">{$valor.titulo}</a></td>
                         <td>{$valor.descripcion}</td>
                         <td>{$valor.tipo}</td>
+                        {if ($valor.foto!="")}
+                        <td><img class="imagenPublicacion" src="imgs/{$valor.id}/{$valor.foto}" /></td>
+                        {/if}
                     </tr>
                 {/foreach}
             </table>
@@ -88,7 +95,7 @@
 
         <div style="display: none">
             <div id="dialog-cargando" title="">
-                <p><img src="imgs/loading-icon.gif" alt="cargando..." /></p>
+                <p><img  src="imgs/loading-icon.gif" alt="cargando..." /></p>
             </div>
         </div>
 

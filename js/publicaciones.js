@@ -53,6 +53,7 @@ function cargarPagina(p) {
         tr.append($("<th />").html("Título"));
         tr.append($("<th />").html("Descripción"));
         tr.append($("<th />").html("Tipo"));
+    tr.append($("<th />").html("Imagen"));
         tabla.append(tr);
 
         for (var i = 0; i < data.length; i++) {
@@ -60,6 +61,9 @@ function cargarPagina(p) {
             tr.append($("<td />").html(data[i].titulo));
             tr.append($("<td />").html(data[i].descripcion));
             tr.append($("<td />").html(data[i].tipo));
+
+            if (data[i].foto != "")
+                tr.append($("<td />").html("<img class='imagenPublicacion' src='imgs/" + data[i].id + "/"+data[i].foto + "' />"));
             tabla.append(tr);
         }
 
@@ -141,6 +145,7 @@ function cargarTablaPublicaciones(publicaciones) {
     tr.append($("<th />").html("Título"));
     tr.append($("<th />").html("Descripción"));
     tr.append($("<th />").html("Tipo"));
+    tr.append($("<th />").html("Imagen"));
     tabla.append(tr);
 
     for (var i = 0; i < publicaciones.length; i++) {
@@ -148,6 +153,8 @@ function cargarTablaPublicaciones(publicaciones) {
         tr.append($("<td />").html("<a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + publicaciones[i].titulo + "</a>"));
         tr.append($("<td />").html(publicaciones[i].descripcion));
         tr.append($("<td />").html(publicaciones[i].tipo));
+        if (publicaciones[i].foto != "")
+            tr.append($("<td />").html("<img class='imagenPublicacion' src='imgs/" + publicaciones[i].id +"/" +publicaciones[i].foto + "' />"));
         tabla.append(tr);
     }
 }

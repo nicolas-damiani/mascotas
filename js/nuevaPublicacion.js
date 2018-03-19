@@ -28,7 +28,7 @@ function crearPublicacion() {
         }).done(function (data) {
             if (data.status == "ok") {
                 alert("Publicacion agregada correctamente");
-            }else{
+            } else {
                 alert("No se pudo agregar la publicacion");
             }
 
@@ -36,6 +36,25 @@ function crearPublicacion() {
     } else {
         alert("Debe llenar todos los datos");
     }
+}
+
+function enviarImagenes() {
+    var data = new FormData($('input[name^="media"]'));
+    jQuery.each($('input[name^="media"]')[0].files, function (i, file) {
+        data.append(i, file);
+    });
+
+    $.ajax({
+        type: ppiFormMethod,
+        data: data,
+        url: ppiFormActionURL,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            alert(data);
+        }
+    });
 }
 
 function cargarRazasSelector(id) {

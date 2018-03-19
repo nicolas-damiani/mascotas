@@ -5,6 +5,18 @@ $(document).ready(function () {
         }
     });
 
+    $('#imagenesPublicacion').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2600,
+                dots: true,
+                arrows: false,
+             //   appendDots: $('#circle')
+          //      prevArrow: '<img class="slick-prev" src="/files/layouts/leftArrowColor.png" style="display: block;height: 38px;position: absolute;top: 41%;margin-bottom: 0px;margin-left: 18px;z-index: 2;" />',
+           //     nextArrow: '<img class="slick-next" src="/files/layouts/rightArrowColor.png" style="display: block;height: 38px;position: absolute;float: right;margin-right: 21px;z-index: 2;right: 0;top: 41%;"/>'
+    });
+
     $('#realizarPregunta').on({
         'click': function () {
             var textoPregunta = $('#textoPregunta').val();
