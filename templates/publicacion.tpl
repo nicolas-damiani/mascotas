@@ -27,6 +27,7 @@
     </head>
     <body>
         <div id="idPublicacion" style="display: none">{$publicacion.id}</div>
+        {include file="encabezado.tpl"}
         <h1 id="tituloPublicacion">{$publicacion.titulo}</h1>
 
       
