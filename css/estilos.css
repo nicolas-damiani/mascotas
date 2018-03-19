@@ -10,6 +10,7 @@ table {
 table th, table td {
     font-family: Arial;
     padding: 3px;
+    text-align: center;
 }
 
 table th {

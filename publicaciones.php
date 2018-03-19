@@ -24,6 +24,10 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
         $accion = strlen($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
         $pagina = strlen($_POST["p"]) ? $_POST["p"] : $_GET["p"];
         $pagina = (int) $pagina;
+    } else if (isset($_GET["p"])) {
+        $pagina = $_GET["p"];
+        $pagina = (int) $pagina;
+        die($_GET["p"]);
     }
     if ($pagina < 1)
         $pagina = 1;
@@ -32,18 +36,19 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
 
     $resultado = array();
     if (isset($_POST["accion"]) && $_POST["accion"] == "filtro") {
+        $accion = "filtro";
         $filtros = $_POST;
         $resultado = cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros);
-    }else{
+    } else {
         $resultado = cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina);
     }
-    
+
     $publicaciones = $resultado['publicaciones'];
 
     $paginacion = $resultado['paginacion'];
 
-    
-    
+
+
     $especies = cargarEspecies($conn);
 
     $barrios = cargarBarrios($conn);
@@ -58,6 +63,23 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
             $publicaciones[$clave]["tipo"] = "Encontrado";
         else if ($publicaciones[$clave]["tipo"] == "P")
             $publicaciones[$clave]["tipo"] = "Perdido";
+        
+        $dir = "imgs/" . $publicaciones[$clave]["id"] . "/";
+
+        if (is_dir($dir)) {
+            $d = dir($dir);
+            // echo "Handle: " . $d->handle . "\n";
+            // echo "Path: " . $d->path . "\n";
+            while (false !== ($entry = $d->read())) {
+                // $fotos[] = $entry;
+                if ($entry != "." && $entry != "..") {
+                    $publicaciones[$clave]["foto"] = $entry;
+                }
+            }
+            $d->close();
+        }else{
+            $publicaciones[$clave]["foto"] = "";
+        }
     }
 
     reset($publicaciones);
@@ -67,10 +89,11 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
      * PROCESO EL CONTENIDO DEL TEMPLATE
      */
 
-    
-    
-    
-    if ($accion == "ajax") {
+
+    if ($accion == "filtro") {
+
+        echo json_encode($resultado);
+    } else if ($accion == "ajax") {
         // $smarty->display("tabla.tpl");
 
         sleep(1);

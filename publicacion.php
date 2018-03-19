@@ -104,11 +104,29 @@ if (isset($_POST['accion'])) {
     reset($preguntas);
 
 
+    $dir = "imgs/" . $_GET["publicacion"] . "/";
+    $fotos = array();
+    
+
+    if (is_dir($dir)) {
+        $d = dir($dir);
+        // echo "Handle: " . $d->handle . "\n";
+        // echo "Path: " . $d->path . "\n";
+        while (false !== ($entry = $d->read())) {
+            // $fotos[] = $entry;
+            if ($entry != "." && $entry != "..") {
+                array_push($fotos, $entry);
+            }
+        }
+        $d->close();
+    }
+
 
 
 
 
     $smarty->assign("publicacion", $publicacion);
+    $smarty->assign("fotos", $fotos);
     $smarty->assign("especie", $especie);
     $smarty->assign("preguntas", $preguntas);
     $smarty->assign("usuario", $usuario);

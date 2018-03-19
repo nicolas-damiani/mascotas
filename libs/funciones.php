@@ -105,21 +105,23 @@ function getRazasPorEspecie($conn, $especieId) {
 }
 
 function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros) {
+    
 
     $conditions = "";
     $hasOneAdded = false;
-    if ($filtros['tipo'] != 0) {
+    if ($filtros['tipo'] !== "0") {
         $hasOneAdded = true;
-        $conditions .= " tipo = " . $filtros['tipo'];
+        $conditions .= " tipo = '" . $filtros['tipo']."'";
     }
-    if ($filtros['especie'] != 0)
+    if ($filtros['especie'] !== "0") {
         if ($hasOneAdded) {
             $conditions .= " AND ";
         } else {
             $hasOneAdded = true;
         }
-    $conditions .= " especie_id = " . $filtros['especie'];
-    if ($filtros['barrio'] != 0) {
+        $conditions .= " especie_id = " . $filtros['especie'];
+    }
+    if ($filtros['barrio'] !== "0") {
         if ($hasOneAdded) {
             $conditions .= " AND ";
         } else {
@@ -127,7 +129,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
         }
         $conditions .= " barrio_id = " . $filtros['barrio'];
     }
-    if ($filtros['raza'] != 0) {
+    if ($filtros['raza'] !== "0") {
         if ($hasOneAdded) {
             $conditions .= " AND ";
         } else {
@@ -135,8 +137,23 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
         }
         $conditions .= " raza_id = " . $filtros['raza'];
     }
+    if ($filtros['palabras'] !== "") {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
+            $hasOneAdded = true;
+        }
+        $conditions .= " ( titulo LIKE '%" . $filtros['palabras']. "%' OR descripcion LIKE '%". $filtros['palabras']. "%')";
+    }
 
-    $sql = "select count(*) as cantidad from publicaciones where " . $conditions;
+    
+    if ($conditions!== ""){
+        $sql = "select count(*) as cantidad from publicaciones where " . $conditions;
+    }else{
+        $sql = "select count(*) as cantidad from publicaciones ";
+    }
+    
+    
 
 
 
@@ -153,8 +170,11 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     $siguiente = $pagina + 1 > $cantidadPaginas ? $cantidadPaginas : $pagina + 1;
 
 
-
-    $sql = "select * from publicaciones where " . $conditions . " order by id desc limit :offset, :cantidad";
+    if ($conditions!=""){
+        $sql = "select * from publicaciones where " . $conditions . " order by id desc limit :offset, :cantidad";
+    }else{
+        $sql = "select * from publicaciones order by id desc limit :offset, :cantidad";
+    }
 
     $param = array(
         array("offset", ($pagina - 1) * $elementosPorPagina, "int"),
@@ -187,6 +207,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     return $resultado;
 }
 
+
 function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->conectar();
 
@@ -210,7 +231,8 @@ function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->desconectar();
 }
 
-function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion) {
+
+function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion){
     $conn->conectar();
 
     $param = array(
@@ -227,15 +249,15 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
     $sql = "insert into publicaciones(tipo, especie_id, raza_id, barrio_id, titulo, abierto, descripcion, usuario_id) values(:tipo, :especie_id, :raza_id, :barrio_id, :titulo, :abierto, :descripcion, :usuario_id)";
 
     $conn->consulta($sql, $param);
-
+    $id;
     if ($conn->ultimoIdInsert() > 0) {
-        $respuesta['status'] = "ok";
-        echo json_encode($respuesta);
+        $id = $conn->ultimoIdInsert();
+        
     } else {
-        $mensaje = "No se pudo guardar la pregunta";
+        $id =  false;
     }
-
     $conn->desconectar();
+    return $id;
 }
 
 function cerrarPublicacion($conn, $exitosa, $idPublicacion) {
@@ -268,3 +290,62 @@ function exportarPublicacionPdf() {
     $pdf->Cell(40, 10, 'Hello World!');
     echo $pdf->Output("D", "Nombre", true);
 }
+        
+function cargarPublicacionesPorEspecie($conn) {
+
+    $sql = "SELECT e.nombre, count(e.id) as cantidad from especies e, publicaciones p where p.especie_id = e.id group by p.especie_id ";
+    $conn->consulta($sql);
+    $publicacionesPorEspecie = $conn->restantesRegistros();
+
+    return $publicacionesPorEspecie;
+}
+
+
+function cargarPublicacionesPorAbierto($conn) {
+
+    $resultado = array();
+    
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE abierto =1 ";
+    $conn->consulta($sql);
+    $publicacionesPorAbierto = $conn->restantesRegistros();
+    
+    while (list($clave, $valor) = each($publicacionesPorAbierto)) {
+           $resultado['abierto'] = $publicacionesPorAbierto[$clave]['cantidad'];
+    }
+    reset($publicacionesPorAbierto);
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE abierto = 0";
+    $conn->consulta($sql);
+    $publicacionesCerrado = $conn->restantesRegistros();
+    while (list($clave, $valor) = each($publicacionesCerrado)) {
+           $resultado['cerrado'] = $publicacionesCerrado[$clave]['cantidad'];
+    }
+    reset($publicacionesCerrado);
+    
+    
+    return $resultado;
+}
+
+function cargarPublicacionesPorExitoso($conn) {
+
+    $resultado = array();
+    
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE exitoso =1 ";
+    $conn->consulta($sql);
+    $publicacionesPorExitoso = $conn->restantesRegistros();
+    
+    while (list($clave, $valor) = each($publicacionesPorExitoso)) {
+           $resultado['exitosas'] = $publicacionesPorExitoso[$clave]['cantidad'];
+    }
+    reset($publicacionesPorExitoso);
+    $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE exitoso is NULL";
+    $conn->consulta($sql);
+    $publicacionesNoExitosas = $conn->restantesRegistros();
+    while (list($clave, $valor) = each($publicacionesNoExitosas)) {
+           $resultado['noExitosas'] = $publicacionesNoExitosas[$clave]['cantidad'];
+    }
+    reset($publicacionesNoExitosas);
+    
+    
+    return $resultado;
+}
+

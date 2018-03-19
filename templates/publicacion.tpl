@@ -7,6 +7,12 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+        
+        <link rel="stylesheet" type="text/css" href="css/publicacion.css"/>
+        <script type="text/javascript" src="/slick/slick.js"></script>
         <script type="text/javascript" src="js/publicacion.js"></script>
         <script>
             $(document).ready(function () {
@@ -33,6 +39,14 @@
             </div>
         </div>
         <p>{$publicacion.descripcion}</p>
+
+        <div id="imagenesPublicacion">
+            {foreach from=$fotos item=valor}
+                <div>
+                    <img class="imagenPublicacion" src="imgs/{$publicacion.id}/{$valor}" />
+                </div>
+            {/foreach}
+        </div>
 
         <ul>{foreach from=$preguntas item=pregunta}
             <div class="pregunta">Pregunta: {$pregunta.texto} <br></div>
