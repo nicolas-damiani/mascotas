@@ -8,10 +8,10 @@
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
         
-        <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
-        <link rel="stylesheet" type="text/css" href="/slick/slick-theme.css"/>
+        <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
         
-        <link rel="stylesheet" type="text/css" href="/css/publicacion.css"/>
+        <link rel="stylesheet" type="text/css" href="css/publicacion.css"/>
         <script type="text/javascript" src="/slick/slick.js"></script>
         <script type="text/javascript" src="js/publicacion.js"></script>
         <script>
