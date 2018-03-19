@@ -11,6 +11,24 @@ $(document).ready(function () {
         }
     });
 
+    $('#pdf').on({
+        'click': function () {
+            var doc = new jsPDF();
+
+            doc.text(10, 10, "Titulo: " + $('#tituloPublicacion').html());
+            doc.text(10, 20, "Estado: " + $('#estadoPublicacion').html());
+            doc.text(10, 30, "Especie: " + $('#especiePublicacion').html());
+            doc.text(10, 40, 'Descripcion' + $('#descripcionPublicacion').html());
+
+            var position = 50;
+            $('.imagenPublicacion').each(function (index) {
+                doc.addImage(this, 'png', 10, position);
+                position += 60;
+            });
+            doc.save('Test.pdf');
+        }
+    });
+
     $('#exportar').on({
         'click': function () {
             exportarPublicacion();
@@ -44,7 +62,6 @@ $(document).ready(function () {
 
 });
 
-
 function initMap() {
     if ($('#latitud').val() != "" && $('#longitud').val() != "") {
 
@@ -65,7 +82,6 @@ function initMap() {
         $('#map').css('display', 'none');
     }
 }
-
 
 
 

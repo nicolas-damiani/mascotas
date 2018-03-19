@@ -1,7 +1,8 @@
 <?php
 
 require_once("libs/class.Conexion.BD.php");
-require("libs/fpdf.php");
+require("libs/fpdf/fpdf.php");
+require("libs//fpdf/font/courier.php");
 
 function time_elapsed($secs) {
     $bit = array(
@@ -283,14 +284,6 @@ function cerrarPublicacion($conn, $exitosa, $idPublicacion) {
         $respuesta['status'] = "error";
     }
     echo json_encode($respuesta);
-}
-
-function exportarPublicacionPdf() {
-    $pdf = new FPDF();
-    $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(40, 10, 'Hello World!');
-    echo $pdf->Output("D", "Nombre", true);
 }
         
 function cargarPublicacionesPorEspecie($conn) {

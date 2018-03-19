@@ -6,7 +6,6 @@ session_start();
 require_once("libs/funciones.php");
 require_once("libs/class.Conexion.BD.php");
 include_once("configuracion.php");
-require_once('libs/fpdf.php');
 
 $conn->conectar();
 
@@ -23,16 +22,6 @@ if (isset($_POST['accion'])) {
         if (isset($_POST['exitosa']) && $_POST['idPublicacion']) {
             cerrarPublicacion($conn, $_POST['exitosa'], $_POST['idPublicacion']);
         }
-    } else if ($_POST['accion'] == "exportarPublicacion") {
-
-        $pdf = new FPDF();
-        $pdf->AddPage();
-        $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(40, 10, utf8_decode('¡Hola, Mundo!'));
-        $pdf->Output();
-        $respuesta['status'] = "ok";
-
-        echo json_encode($respuesta);
     }
 } else {
 
@@ -106,7 +95,7 @@ if (isset($_POST['accion'])) {
 
     $dir = "imgs/" . $_GET["publicacion"] . "/";
     $fotos = array();
-    
+
 
     if (is_dir($dir)) {
         $d = dir($dir);

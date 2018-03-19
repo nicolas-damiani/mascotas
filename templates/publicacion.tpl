@@ -17,6 +17,7 @@
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACChU-DFItFOx-BfhQdvtpOGZDJsG88d4&callback=initMap">
         </script>
         <script type="text/javascript" src="js/publicacion.js"></script>
+        <script type="text/javascript" src="js/jspdf.min.js"></script>
         <script>
             $(document).ready(function () {
                 $('#nuevaPregunta').on({
@@ -29,19 +30,21 @@
     </head>
     <body>
         <div id="idPublicacion" style="display: none">{$publicacion.id}</div>
-        <h1>{$publicacion.titulo}</h1>
+        <h1 id="tituloPublicacion">{$publicacion.titulo}</h1>
 
+      
+        
         <div class="fila">
             <div class="col1">
                 <div class="label">Estado:</div>
-                <h2>{$publicacion.tipo}</h2>
+                <h2 id="estadoPublicacion">{$publicacion.tipo}</h2>
             </div>
             <div class="col2">
                 <div class="label">Especie:</div>
-                <h2>{$especie.nombre}</h2>
+                <h2 id="especiePublicacion">{$especie.nombre}</h2>
             </div>
         </div>
-        <p>{$publicacion.descripcion}</p>
+        <p id="descripcionPublicacion">{$publicacion.descripcion}</p>
 
         <div id="imagenesPublicacion">
             {foreach from=$fotos item=valor}
@@ -73,10 +76,9 @@
                 <input type="button" id="realizarPregunta" value="PREGUNTAR">
             </div>
 
-            <div>Creador: {$creador}</div>
 
-            <div id="exportar">
-                EXPORTAR
+            <div id="pdf">
+                EXPORTAR A PDF
             </div>
 
             {*            {if ($creador and !$cerrada)}*}
