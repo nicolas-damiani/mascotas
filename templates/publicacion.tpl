@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
         
         <link rel="stylesheet" type="text/css" href="css/publicacion.css"/>
-        <script type="text/javascript" src="/slick/slick.js"></script>
+        <script type="text/javascript" src="slick/slick.js"></script>
         <script type="text/javascript" src="js/publicacion.js"></script>
         <script>
             $(document).ready(function () {
