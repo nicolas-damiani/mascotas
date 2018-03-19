@@ -7,10 +7,10 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-        
+
         <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
         <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-        
+
         <link rel="stylesheet" type="text/css" href="css/publicacion.css"/>
         <script type="text/javascript" src="slick/slick.js"></script>
         <script type="text/javascript" src="js/publicacion.js"></script>
@@ -66,32 +66,26 @@
                 <input type="text" id="textoPregunta">
                 <input type="button" id="realizarPregunta" value="PREGUNTAR">
             </div>
-            
+
             <div>Creador: {$creador}</div>
-            <br>
-            <div>Cerrada: {$cerrada}</div>
-            <br>
-            <div>Exitosa: {$exitosa}</div>
-            
-            <br>
-            
+
             <div id="exportar">
                 EXPORTAR
             </div>
 
-{*            {if ($creador and !$cerrada)}*}
-                <div>Indique si la mascota fue encontrada o no</div>
-                <select id="selectExito">
-                    <option value="1">Encontrada</option>
-                    <option value="0">No encontrada</option>
-                </select>
-                <div id="cerrarPublicacion">CERRAR</div>
-{*            {else}*}
+            {*            {if ($creador and !$cerrada)}*}
+            <div>Indique si la mascota fue encontrada o no</div>
+            <select id="selectExito">
+                <option value="1">Encontrada</option>
+                <option value="0">No encontrada</option>
+            </select>
+            <div id="cerrarPublicacion">CERRAR</div>
+            {*            {else}*}
             {*    {if $exitosa} 
-                    <div>La mascota fue encontrada por su dueño! Muchas gracias!</div>
-                {else}
-                    <div>Lamentablemente la mascota no fue encontrada por su dueño.</div>
-                {/if}
+            <div>La mascota fue encontrada por su dueño! Muchas gracias!</div>
+            {else}
+            <div>Lamentablemente la mascota no fue encontrada por su dueño.</div>
+            {/if}
             {/if}*}
             <p>
                 <a href="noticias.php">Volver a las noticias</a>
