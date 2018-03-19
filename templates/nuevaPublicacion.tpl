@@ -8,10 +8,12 @@
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/nuevaPublicacion.js"></script>
-        <script>
-            $(document).ready(function () {
-
-            });
+        
+        <link rel="stylesheet" type="text/css" href="css/nuevaPublicacion.css"/>
+        
+        
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACChU-DFItFOx-BfhQdvtpOGZDJsG88d4&callback=initMap">
         </script>
     </head>
     <body>
@@ -84,6 +86,12 @@
             </div>
             
              <input type="hidden" name="accion" value="nuevaPublicacion" />
+             
+             <div id="map"></div>
+             
+             <input id="lat" type="hidden" name="latitud" />
+             <input id="lng" type="hidden" name="longitud" />
+             
             
             
 

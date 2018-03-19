@@ -42,6 +42,9 @@ $(document).ready(function () {
         autoplay: true,
         autoplaySpeed: 2600,
         dots: true,
+        //   appendDots: $('#circle')
+        //      prevArrow: '<img class="slick-prev" src="/files/layouts/leftArrowColor.png" style="display: block;height: 38px;position: absolute;top: 41%;margin-bottom: 0px;margin-left: 18px;z-index: 2;" />',
+        //     nextArrow: '<img class="slick-next" src="/files/layouts/rightArrowColor.png" style="display: block;height: 38px;position: absolute;float: right;margin-right: 21px;z-index: 2;right: 0;top: 41%;"/>'
     });
 
     $('#realizarPregunta').on({
@@ -55,7 +58,33 @@ $(document).ready(function () {
             }
         }
     });
+
+
 });
+
+function initMap() {
+    if ($('#latitud').val() != "" && $('#longitud').val() != "") {
+
+        var lat = parseInt($('#latitud').val());
+        var long = parseInt($('#longitud').val());
+
+
+        var uluru = {lat: lat, lng: long};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    } else {
+        $('#map').css('display', 'none');
+    }
+}
+
+
+
 
 function exportarPublicacion() {
     $.ajax({

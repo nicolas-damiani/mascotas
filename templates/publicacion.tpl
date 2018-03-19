@@ -13,6 +13,9 @@
 
         <link rel="stylesheet" type="text/css" href="css/publicacion.css"/>
         <script type="text/javascript" src="slick/slick.js"></script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACChU-DFItFOx-BfhQdvtpOGZDJsG88d4&callback=initMap">
+        </script>
         <script type="text/javascript" src="js/publicacion.js"></script>
         <script type="text/javascript" src="js/jspdf.min.js"></script>
         <script>
@@ -52,6 +55,11 @@
             {/foreach}
         </div>
 
+
+        <input id="latitud" value="{$publicacion.latitud}" type="hidden" />
+        <input id="longitud" value="{$publicacion.longitud}" type="hidden" />
+        <div id="map"></div>
+
         <ul>{foreach from=$preguntas item=pregunta}
             <div class="pregunta">Pregunta: {$pregunta.texto} <br></div>
             <div class="respuesta">Respuesta: {$pregunta.respuesta} <br><br><br></div>
@@ -60,10 +68,8 @@
 
             {if !$usuario}
                 <a href="login.php">Inicia sesión para realizar una pregunta</a>
-            {elseif (($usuario eq true) and ($cerrada eq false))}
+            {elseif (($usuario eq true))}
                 <div id="nuevaPregunta">Nueva pregunta</div>
-            {else}
-                <div>La publicación ya fue cerrada, no se pueden realizar preguntas nuevas</div>
             {/if}
 
             <div id="contenedorNuevaPregunta" style="display: none;">

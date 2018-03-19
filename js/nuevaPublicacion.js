@@ -8,6 +8,28 @@ $(document).ready(function () {
     })
 });
 
+
+function initMap() {
+    var uluru = {lat: -25.363, lng: 131.044};
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: uluru
+    });
+    var marker = new google.maps.Marker({
+        position: uluru,
+        map: map,
+        draggable: true
+    });
+    marker.addListener('drag', handleEvent);
+    marker.addListener('dragend', handleEvent);
+}
+
+
+function handleEvent(event) {
+    document.getElementById('lat').value = event.latLng.lat();
+    document.getElementById('lng').value = event.latLng.lng();
+}
+
 function crearPublicacion() {
     var barrioId = $('#selectBarrio').val();
     var especieId = $('#selectEspecie').val();

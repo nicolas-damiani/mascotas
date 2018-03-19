@@ -233,7 +233,7 @@ function nuevaPregunta($conn, $idPublicacion, $texto) {
 }
 
 
-function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion){
+function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion, $latitud, $longitud){
     $conn->conectar();
 
     $param = array(
@@ -245,9 +245,11 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
         array("abierto", 1, "bool"),
         array("descripcion", $descripcion, "string"),
         array("usuario_id", $_SESSION['user']['id_usuario'], "int"),
+        array("latitud", $latitud, "int"),
+        array("longitud", $longitud, "int"),
     );
 
-    $sql = "insert into publicaciones(tipo, especie_id, raza_id, barrio_id, titulo, abierto, descripcion, usuario_id) values(:tipo, :especie_id, :raza_id, :barrio_id, :titulo, :abierto, :descripcion, :usuario_id)";
+    $sql = "insert into publicaciones(tipo, especie_id, raza_id, barrio_id, titulo, abierto, descripcion, usuario_id, latitud, longitud) values(:tipo, :especie_id, :raza_id, :barrio_id, :titulo, :abierto, :descripcion, :usuario_id, :latitud, :longitud)";
 
     $conn->consulta($sql, $param);
     $id;

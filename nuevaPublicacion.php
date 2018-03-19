@@ -11,11 +11,10 @@ $conn->conectar();
 
 if (isset($_POST['accion'])) {
     if ($_POST['accion'] == "nuevaPublicacion") {
-        if (isset($_POST['tipo']) && isset($_POST['especie']) && isset($_POST['raza']) && isset($_POST['titulo']) && isset($_POST['descripcion'])) {
-            $id = nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion']);
+        if (isset($_POST['tipo']) && isset($_POST['especie']) && isset($_POST['raza']) && isset($_POST['titulo']) && isset($_POST['descripcion']) && isset($_POST['latitud']) && isset($_POST['longitud'])) {
+            $id = nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion'],$_POST['latitud'],  $_POST['longitud']);
             if ($id != false) {
                 $dir = "imgs/" . $id . "/";
-
 
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777);
