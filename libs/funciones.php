@@ -1,6 +1,7 @@
 <?php
 
 require_once("libs/class.Conexion.BD.php");
+require("libs/fpdf.php");
 
 function time_elapsed($secs) {
     $bit = array(
@@ -39,9 +40,8 @@ function cargarBarrios($conn) {
     return $barrios;
 }
 
-
 function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
-    
+
 
     $sql = "select count(*) as cantidad from publicaciones";
 
@@ -92,55 +92,53 @@ function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
     return $resultado;
 }
 
-function getRazasPorEspecie($conn, $especieId){
+function getRazasPorEspecie($conn, $especieId) {
     $sql = "select * from razas where especie_id = :especie_id";
-    
+
     $param = array(
         array("especie_id", $especieId, "int"),
     );
-    
+
     $conn->consulta($sql, $param);
     $razas = $conn->restantesRegistros();
     return $razas;
-    
 }
 
-
 function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros) {
-    
+
     $conditions = "";
     $hasOneAdded = false;
-    if ($filtros['tipo']!=0){
+    if ($filtros['tipo'] != 0) {
         $hasOneAdded = true;
-        $conditions.=" tipo = ".$filtros['tipo'];
+        $conditions .= " tipo = " . $filtros['tipo'];
     }
-    if ($filtros['especie']!=0)
-        if ($hasOneAdded){
-            $conditions.=" AND ";
-        }else{
+    if ($filtros['especie'] != 0)
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
             $hasOneAdded = true;
         }
-        $conditions.=" especie_id = ".$filtros['especie'];
-    if ($filtros['barrio']!=0){
-        if ($hasOneAdded){
-            $conditions.=" AND ";
-        }else{
+    $conditions .= " especie_id = " . $filtros['especie'];
+    if ($filtros['barrio'] != 0) {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
             $hasOneAdded = true;
         }
-        $conditions.=" barrio_id = ".$filtros['barrio'];
+        $conditions .= " barrio_id = " . $filtros['barrio'];
     }
-    if ($filtros['raza']!=0){
-        if ($hasOneAdded){
-            $conditions.=" AND ";
-        }else{
+    if ($filtros['raza'] != 0) {
+        if ($hasOneAdded) {
+            $conditions .= " AND ";
+        } else {
             $hasOneAdded = true;
         }
-        $conditions.=" raza_id = ".$filtros['raza'];
+        $conditions .= " raza_id = " . $filtros['raza'];
     }
-    
-    $sql = "select count(*) as cantidad from publicaciones where ".$conditions;
-    
-     
+
+    $sql = "select count(*) as cantidad from publicaciones where " . $conditions;
+
+
 
     $conn->consulta($sql);
 
@@ -156,7 +154,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
 
 
-    $sql = "select * from publicaciones where ".$conditions. " order by id desc limit :offset, :cantidad";
+    $sql = "select * from publicaciones where " . $conditions . " order by id desc limit :offset, :cantidad";
 
     $param = array(
         array("offset", ($pagina - 1) * $elementosPorPagina, "int"),
@@ -167,7 +165,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
     $publicaciones = $conn->restantesRegistros();
 
-    
+
 
     $paginacion = array();
 
@@ -180,15 +178,14 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
     $paginacion[] = array("p" => $siguiente, "texto" => "&gt;");
     $paginacion[] = array("p" => $cantidadPaginas, "texto" => "&gt;&gt;");
-    
+
     $resultado = array();
     $resultado['paginacion'] = $paginacion;
     $resultado['publicaciones'] = $publicaciones;
-        
-    
+
+
     return $resultado;
 }
-
 
 function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->conectar();
@@ -213,7 +210,7 @@ function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->desconectar();
 }
 
-function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion){
+function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion) {
     $conn->conectar();
 
     $param = array(
@@ -239,4 +236,35 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
     }
 
     $conn->desconectar();
+}
+
+function cerrarPublicacion($conn, $exitosa, $idPublicacion) {
+    $conn->conectar();
+
+    $param = array(
+        array("exitoso", $exitosa, "bool"),
+        array("idParam", $idPublicacion, "int"),
+        array("abierto", 0, "bool"),
+    );
+
+    $sql = "UPDATE publicaciones SET exitoso = $exitosa, abierto = 0 WHERE id = $idPublicacion;";
+
+    $result = $conn->consulta($sql);
+
+
+
+    if ($result == true) {
+        $respuesta['status'] = "ok";
+    } else {
+        $respuesta['status'] = "error";
+    }
+    echo json_encode($respuesta);
+}
+
+function exportarPublicacionPdf() {
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(40, 10, 'Hello World!');
+    echo $pdf->Output("D", "Nombre", true);
 }
