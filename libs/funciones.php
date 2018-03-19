@@ -1,6 +1,7 @@
 <?php
 
 require_once("libs/class.Conexion.BD.php");
+require("libs/fpdf.php");
 
 function time_elapsed($secs) {
     $bit = array(
@@ -206,6 +207,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     return $resultado;
 }
 
+
 function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->conectar();
 
@@ -258,6 +260,37 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
     return $id;
 }
 
+function cerrarPublicacion($conn, $exitosa, $idPublicacion) {
+    $conn->conectar();
+
+    $param = array(
+        array("exitoso", $exitosa, "bool"),
+        array("idParam", $idPublicacion, "int"),
+        array("abierto", 0, "bool"),
+    );
+
+    $sql = "UPDATE publicaciones SET exitoso = $exitosa, abierto = 0 WHERE id = $idPublicacion;";
+
+    $result = $conn->consulta($sql);
+
+
+
+    if ($result == true) {
+        $respuesta['status'] = "ok";
+    } else {
+        $respuesta['status'] = "error";
+    }
+    echo json_encode($respuesta);
+}
+
+function exportarPublicacionPdf() {
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(40, 10, 'Hello World!');
+    echo $pdf->Output("D", "Nombre", true);
+}
+        
 function cargarPublicacionesPorEspecie($conn) {
 
     $sql = "SELECT e.nombre, count(e.id) as cantidad from especies e, publicaciones p where p.especie_id = e.id group by p.especie_id ";
@@ -315,5 +348,4 @@ function cargarPublicacionesPorExitoso($conn) {
     
     return $resultado;
 }
-
 

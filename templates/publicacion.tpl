@@ -56,14 +56,43 @@
 
             {if !$usuario}
                 <a href="login.php">Inicia sesión para realizar una pregunta</a>
-            {else}
+            {elseif (($usuario eq true) and ($cerrada eq false))}
                 <div id="nuevaPregunta">Nueva pregunta</div>
+            {else}
+                <div>La publicación ya fue cerrada, no se pueden realizar preguntas nuevas</div>
             {/if}
 
             <div id="contenedorNuevaPregunta" style="display: none;">
                 <input type="text" id="textoPregunta">
                 <input type="button" id="realizarPregunta" value="PREGUNTAR">
             </div>
+            
+            <div>Creador: {$creador}</div>
+            <br>
+            <div>Cerrada: {$cerrada}</div>
+            <br>
+            <div>Exitosa: {$exitosa}</div>
+            
+            <br>
+            
+            <div id="exportar">
+                EXPORTAR
+            </div>
+
+{*            {if ($creador and !$cerrada)}*}
+                <div>Indique si la mascota fue encontrada o no</div>
+                <select id="selectExito">
+                    <option value="1">Encontrada</option>
+                    <option value="0">No encontrada</option>
+                </select>
+                <div id="cerrarPublicacion">CERRAR</div>
+{*            {else}*}
+            {*    {if $exitosa} 
+                    <div>La mascota fue encontrada por su dueño! Muchas gracias!</div>
+                {else}
+                    <div>Lamentablemente la mascota no fue encontrada por su dueño.</div>
+                {/if}
+            {/if}*}
             <p>
                 <a href="noticias.php">Volver a las noticias</a>
             </p>
