@@ -1,8 +1,6 @@
 <?php
 
 require_once("libs/class.Conexion.BD.php");
-require("libs/fpdf/fpdf.php");
-require("libs//fpdf/font/courier.php");
 
 function time_elapsed($secs) {
     $bit = array(
