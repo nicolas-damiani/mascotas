@@ -31,21 +31,30 @@
     <body>
         <div id="idPublicacion" style="display: none">{$publicacion.id}</div>
         {include file="encabezado.tpl"}
-        <h1 id="tituloPublicacion">{$publicacion.titulo}</h1>
+        <div id="tituloPublicacion">{$publicacion.titulo}</div>
 
-      
-        
-        <div class="fila">
-            <div class="col1">
-                <div class="label">Estado:</div>
-                <h2 id="estadoPublicacion">{$publicacion.tipo}</h2>
-            </div>
-            <div class="col2">
-                <div class="label">Especie:</div>
-                <h2 id="especiePublicacion">{$especie.nombre}</h2>
+
+
+        <div class="filaPublicacion">
+            <div class="infoPublicacion">
+                <div class="labelInfoPublicacion">Estado:</div>
+                <div id="estadoPublicacion" class="dataInfoPublicacion">{$publicacion.tipo}</div>
             </div>
         </div>
-        <p id="descripcionPublicacion">{$publicacion.descripcion}</p>
+
+        <div class="filaPublicacion">
+            <div class="infoPublicacion">
+                <div class="labelInfoPublicacion">Especie:</div>
+                <div id="especiePublicacion" class="dataInfoPublicacion">{$especie.nombre}</div>
+            </div>
+        </div>
+
+
+        <div class="filaPublicacion">
+            <div class="infoPublicacion">
+                <div id="descripcionPublicacion">{$publicacion.descripcion}</div>
+            </div>
+        </div>
 
         <div id="imagenesPublicacion">
             {foreach from=$fotos item=valor}
