@@ -70,10 +70,11 @@
                         {foreach from=$publicaciones item=valor key=clave}
 
                             <tr class="filaMiniatura">
-
-                                {if ($valor.foto!="")}
-                                    <td width="150px"><a target="_blank" href="publicacion.php?publicacion={$valor.id}"><img class="imagenPublicacion" src="imgs/{$valor.id}/{$valor.foto}" /></a></td>
+                                <td width="150px">
+                                    {if ($valor.foto!="")}
+                                        <a target="_blank" href="publicacion.php?publicacion={$valor.id}"><img class="imagenPublicacion" src="imgs/{$valor.id}/{$valor.foto}" /></a>
                                         {/if}
+                                </td>
                                 <td > <div class="tituloMiniatura"><a target="_blank" href="publicacion.php?publicacion={$valor.id}">{$valor.titulo}</a></div>
                                     <div class="descripcionMiniatura"> {$valor.descripcion} </div></td>
                                 <td width="150px">{$valor.tipo}</td>
