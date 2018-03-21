@@ -16,7 +16,6 @@
         {include file="encabezado.tpl"}
 
 
-        <h1>PUBLICACIONES</h1>
         <div class="contenido">
             <div id="p" style="display: none">{$p}</div>
             <div class="columnaFiltro">

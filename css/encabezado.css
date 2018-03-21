@@ -6,6 +6,8 @@
     padding-right:  10%;
     height: 70px;
     margin: 0px auto;
+    padding-bottom: 12px;
+    padding-top:  12px;
 }
 
 .opcionEncabezado{
@@ -14,6 +16,12 @@
     height: 100%;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.opcionEncabezado:hover{
+
+    color: #D1E3FF;
 }
 
 #contenedorLogoHeader{
@@ -23,3 +31,12 @@
 #logoHeader{
     height: 100%;
 }
+
+.contenidoEncabezado{
+    background: #313149;
+}
+
+body{
+    margin: 0;
+}
+
