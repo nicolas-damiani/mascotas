@@ -2,15 +2,21 @@
     Created on : 29-ene-2018, 11:49:05
     Author     : alumnoFI
 */
+
+html{
+    background-color: #222233;
+    color: #AACCFF;
+     font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
 table {
-    border: 1px solid #000;
+ /*   border: 1px solid #000;*/
     width: 50%;
 }
 
 table th, table td {
     font-family: Arial;
     padding: 3px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 table th {
@@ -83,13 +89,15 @@ ul#paginacion {
     text-decoration: none;
     overflow: auto;
     padding: 0;
-    margin: 0 auto;
+    /* margin: 0px auto; */
+    text-align:  center;
+    display:  inline-block;
 }
 
 ul#paginacion li {
     list-style: none;
     display: inline-block;
-    margin: 0 5px;
+    margin: 0 13px;
     float: left;
 }
 

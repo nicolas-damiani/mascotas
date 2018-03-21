@@ -57,13 +57,13 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
 
     while (list($clave, $valor) = each($publicaciones)) {
         if (strlen($valor["descripcion"]) > 150) {
-            $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 50) . "...";
+            $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 150) . "...";
         }
         if ($publicaciones[$clave]["tipo"] == "E")
             $publicaciones[$clave]["tipo"] = "Encontrado";
         else if ($publicaciones[$clave]["tipo"] == "P")
             $publicaciones[$clave]["tipo"] = "Perdido";
-        
+
         $dir = "imgs/" . $publicaciones[$clave]["id"] . "/";
 
         if (is_dir($dir)) {
@@ -77,7 +77,7 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
                 }
             }
             $d->close();
-        }else{
+        } else {
             $publicaciones[$clave]["foto"] = "";
         }
     }
@@ -99,10 +99,18 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
         sleep(1);
         echo json_encode($publicaciones);
     } else {
+
+        if (!isset($_SESSION["user"])) {
+            $usuario = false;
+        } else {
+            $usuario = $_SESSION["user"];
+        }
         $smarty->assign("publicaciones", $publicaciones);
         $smarty->assign("especies", $especies);
         $smarty->assign("barrios", $barrios);
         $smarty->assign("paginacion", $paginacion);
+
+        $smarty->assign("usuario", $usuario);
         $smarty->assign("p", $pagina);
 
         $smarty->display("publicaciones.tpl");

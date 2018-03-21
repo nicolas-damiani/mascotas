@@ -3,9 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Facultad/2018/Obligatorio/estadisticas.php</file>
-            <file>file:/D:/Facultad/2018/Obligatorio/js/estadisticas.js</file>
-            <file>file:/D:/Facultad/2018/Obligatorio/templates/estadisticas.tpl</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/configuracion.php</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/libs/funciones.php</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/templates/login.tpl</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/login.php</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/templates/publicaciones.tpl</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/index.php</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/publicaciones.php</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/css/estilos.css</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/publicacion.php</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/templates/publicacion.tpl</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/css/publicaciones.css</file>
+            <file>file:/D:/Facultad/2018/Obligatorio/templates/encabezado.tpl</file>
         </group>
     </open-files>
 </project-private>
