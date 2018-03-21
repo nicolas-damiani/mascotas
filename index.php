@@ -71,6 +71,6 @@ $smarty->assign("inactividad", $inactividad);
 /*
  * ENVIO EL TEMPLATE AL CLIENTE
  */
-$smarty->display('login.tpl.html');
+$smarty->display('login.tpl');
 
 ?>

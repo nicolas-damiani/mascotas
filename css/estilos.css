@@ -13,6 +13,10 @@ table {
     width: 50%;
 }
 
+html{
+    background-image: 'url(Obligatorio/imgs/gradient.jpeg)';
+}
+
 table th, table td {
     font-family: Arial;
     padding: 3px;
@@ -32,14 +36,13 @@ div.error {
     border: red 2px solid;
     padding: 10px;
     margin: 10px 0;
-    background: #cff;
     color: #300;
     font-weight: bold;
 }
 
 form label {
     display: inline-block;
-    width: 120px;
+    width: 95px;
 }
 
 input.invalido {
@@ -51,9 +54,10 @@ div.error {
     border: red 2px solid;
     padding: 10px;
     margin: 10px 0;
-    background: #cff;
     color: #300;
     font-weight: bold;
+    width: 238px;
+    margin: 20px auto;
 }
 
 div.fila {

@@ -104,13 +104,13 @@ function getRazasPorEspecie($conn, $especieId) {
 }
 
 function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros) {
-    
+
 
     $conditions = "";
     $hasOneAdded = false;
     if ($filtros['tipo'] !== "0") {
         $hasOneAdded = true;
-        $conditions .= " tipo = '" . $filtros['tipo']."'";
+        $conditions .= " tipo = '" . $filtros['tipo'] . "'";
     }
     if ($filtros['especie'] !== "0") {
         if ($hasOneAdded) {
@@ -142,17 +142,17 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
         } else {
             $hasOneAdded = true;
         }
-        $conditions .= " ( titulo LIKE '%" . $filtros['palabras']. "%' OR descripcion LIKE '%". $filtros['palabras']. "%')";
+        $conditions .= " ( titulo LIKE '%" . $filtros['palabras'] . "%' OR descripcion LIKE '%" . $filtros['palabras'] . "%')";
     }
 
-    
-    if ($conditions!== ""){
+
+    if ($conditions !== "") {
         $sql = "select count(*) as cantidad from publicaciones where " . $conditions;
-    }else{
+    } else {
         $sql = "select count(*) as cantidad from publicaciones ";
     }
-    
-    
+
+
 
 
 
@@ -169,9 +169,9 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     $siguiente = $pagina + 1 > $cantidadPaginas ? $cantidadPaginas : $pagina + 1;
 
 
-    if ($conditions!=""){
+    if ($conditions != "") {
         $sql = "select * from publicaciones where " . $conditions . " order by id desc limit :offset, :cantidad";
-    }else{
+    } else {
         $sql = "select * from publicaciones order by id desc limit :offset, :cantidad";
     }
 
@@ -206,7 +206,6 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     return $resultado;
 }
 
-
 function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->conectar();
 
@@ -230,8 +229,7 @@ function nuevaPregunta($conn, $idPublicacion, $texto) {
     $conn->desconectar();
 }
 
-
-function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion, $latitud, $longitud){
+function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo, $descripcion, $latitud, $longitud) {
     $conn->conectar();
 
     $param = array(
@@ -253,9 +251,8 @@ function nuevaPublicacion($conn, $tipo, $especieId, $razaId, $barrioId, $titulo,
     $id;
     if ($conn->ultimoIdInsert() > 0) {
         $id = $conn->ultimoIdInsert();
-        
     } else {
-        $id =  false;
+        $id = false;
     }
     $conn->desconectar();
     return $id;
@@ -283,7 +280,7 @@ function cerrarPublicacion($conn, $exitosa, $idPublicacion) {
     }
     echo json_encode($respuesta);
 }
-        
+
 function cargarPublicacionesPorEspecie($conn) {
 
     $sql = "SELECT e.nombre, count(e.id) as cantidad from especies e, publicaciones p where p.especie_id = e.id group by p.especie_id ";
@@ -293,52 +290,69 @@ function cargarPublicacionesPorEspecie($conn) {
     return $publicacionesPorEspecie;
 }
 
-
 function cargarPublicacionesPorAbierto($conn) {
 
     $resultado = array();
-    
+
     $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE abierto =1 ";
     $conn->consulta($sql);
     $publicacionesPorAbierto = $conn->restantesRegistros();
-    
+
     while (list($clave, $valor) = each($publicacionesPorAbierto)) {
-           $resultado['abierto'] = $publicacionesPorAbierto[$clave]['cantidad'];
+        $resultado['abierto'] = $publicacionesPorAbierto[$clave]['cantidad'];
     }
     reset($publicacionesPorAbierto);
     $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE abierto = 0";
     $conn->consulta($sql);
     $publicacionesCerrado = $conn->restantesRegistros();
     while (list($clave, $valor) = each($publicacionesCerrado)) {
-           $resultado['cerrado'] = $publicacionesCerrado[$clave]['cantidad'];
+        $resultado['cerrado'] = $publicacionesCerrado[$clave]['cantidad'];
     }
     reset($publicacionesCerrado);
-    
-    
+
+
     return $resultado;
 }
 
 function cargarPublicacionesPorExitoso($conn) {
 
     $resultado = array();
-    
+
     $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE exitoso =1 ";
     $conn->consulta($sql);
     $publicacionesPorExitoso = $conn->restantesRegistros();
-    
+
     while (list($clave, $valor) = each($publicacionesPorExitoso)) {
-           $resultado['exitosas'] = $publicacionesPorExitoso[$clave]['cantidad'];
+        $resultado['exitosas'] = $publicacionesPorExitoso[$clave]['cantidad'];
     }
     reset($publicacionesPorExitoso);
     $sql = "SELECT COUNT( * ) AS cantidad FROM publicaciones WHERE exitoso is NULL";
     $conn->consulta($sql);
     $publicacionesNoExitosas = $conn->restantesRegistros();
     while (list($clave, $valor) = each($publicacionesNoExitosas)) {
-           $resultado['noExitosas'] = $publicacionesNoExitosas[$clave]['cantidad'];
+        $resultado['noExitosas'] = $publicacionesNoExitosas[$clave]['cantidad'];
     }
     reset($publicacionesNoExitosas);
-    
-    
+
+
     return $resultado;
 }
 
+function responderPregunta($conn, $idPregunta, $respuestaPregunta) {
+    $conn->conectar();
+    //Probarlo, pero creo que ya esta
+
+
+    $sql = "UPDATE preguntas SET respuesta = '$respuestaPregunta' WHERE id = $idPregunta;";
+
+    $result = $conn->consulta($sql);
+
+
+    $respuesta = array();
+    if ($result == true) {
+        $respuesta['status'] = "ok";
+    } else {
+        $respuesta['status'] = "error";
+    }
+    echo json_encode($respuesta);
+}

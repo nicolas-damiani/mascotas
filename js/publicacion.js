@@ -1,13 +1,25 @@
 $(document).ready(function () {
     $('#nuevaPregunta').on({
         'click': function () {
-            $('#contenedorNuevaPregunta').css('display', 'block');
+            $('#contenedorNuevaPregunta').css('display', 'flex');
         }
     });
 
     $('#cerrarPublicacion').on({
         'click': function () {
             cerrarPublicacion();
+        }
+    });
+
+    $('.responder').on({
+        'click': function () {
+            var idPregunta = this.id;
+            var respuesta = $(this).siblings('.inputRespuesta').val();
+            if (respuesta != "" && respuesta != " ") {
+                responderPregunta(idPregunta, respuesta);
+            }else{
+                alert("La respuesta no puede ser vacia");
+            }
         }
     });
 
@@ -133,6 +145,24 @@ function nuevaPregunta(textoPregunta, idPublicacion) {
         dataType: "json",
         type: "POST",
         data: "accion=nuevaPregunta&texto=" + textoPregunta + "&idPublicacion=" + idPublicacion,
+        timeout: 2000,
+        beforeSend: function () {
+            //cargando();
+        }
+    }).done(function (data) {
+        if (data.status == "ok") {
+            location.reload();
+        }
+    })
+}
+
+function responderPregunta(idPregunta, respuesta) {
+
+    $.ajax({
+        url: "publicacion.php",
+        dataType: "json",
+        type: "POST",
+        data: "accion=responderPregunta&idPregunta=" + idPregunta + "&respuesta=" + respuesta,
         timeout: 2000,
         beforeSend: function () {
             //cargando();
