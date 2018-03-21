@@ -93,16 +93,15 @@
     color: #AACCFF;
     width: 261px;
     text-align:  center;
-    font-size: 1.7vw;
+    font-size: 15px;
 }
 
 
 #logoLogin{
     display:  flex;
     margin:  auto;
-    width: 18%;
     margin-top: 30px;
-    max-width:  150px;
+    width: 150px;
 }
 
 

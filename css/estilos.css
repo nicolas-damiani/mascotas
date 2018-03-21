@@ -114,3 +114,13 @@ ul#paginacion li {
     left: 0;
     right: 0;
 }
+
+a { color:#AACCFF } /* Globally */
+
+/* Each state */
+
+a{text-decoration: none;}
+a:visited { text-decoration: none; color:#AACCFF; }
+a:hover { text-decoration: none; color:#D1E3FF; }
+a:focus { text-decoration: none; color:#AACCFF; }
+a:hover, a:active { text-decoration: none; color:#D1E3FF }

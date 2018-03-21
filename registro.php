@@ -57,6 +57,6 @@ $smarty->assign("mensaje", $mensaje);
 /*
  * ENVIO EL TEMPLATE AL CLIENTE
  */
-$smarty->display('registro.tpl.html');
+$smarty->display('registro.tpl');
 
 ?>
