@@ -6,7 +6,10 @@
     <body>
         <div id="divEncabezado"> 
 
-            <div id="">ENCUENTRA MASCOTAS</div>
+            <div id="contenedorLogoHeader">
+                <img id="logoHeader" src='/Obligatorio/imgs/logo.png'> 
+            </div>
+            
             <div class="opcionEncabezado">Publicaciones</div>
 
 

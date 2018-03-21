@@ -49,6 +49,7 @@ if ($accion == "login") {
             "acceso" => time(),
             "uacceso" => time()
         );
+        header("location: publicaciones.php");
     } else {
         $mensaje = "El usuario o contraseña ingresados son incorrectos";
     }
