@@ -46,24 +46,20 @@ function cargarPagina(p) {
         beforeSend: function () {
             //  cargando();
         }
-    }).done(function (data) {
+    }).done(function (publicaciones) {
         var tabla = $(".cuerpo table").empty();
 
-        var tr = $("<tr />");
-        tr.append($("<th />").html("Título"));
-        tr.append($("<th />").html("Descripción"));
-        tr.append($("<th />").html("Tipo"));
-    tr.append($("<th />").html("Imagen"));
-        tabla.append(tr);
 
-        for (var i = 0; i < data.length; i++) {
-            tr = $("<tr />");
-            tr.append($("<td />").html(data[i].titulo));
-            tr.append($("<td />").html(data[i].descripcion));
-            tr.append($("<td />").html(data[i].tipo));
 
-            if (data[i].foto != "")
-                tr.append($("<td />").html("<img class='imagenPublicacion' src='imgs/" + data[i].id + "/"+data[i].foto + "' />"));
+        for (var i = 0; i < publicaciones.length; i++) {
+            var tr = $("<tr class='filaMiniatura' />");
+            if (publicaciones[i].foto != "")
+                tr.append($("<td width='150px' />").html("<a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + "<img class='imagenPublicacion' src='imgs/" + publicaciones[i].id + "/" + publicaciones[i].foto + "' />" + "</a>"));
+            else
+                tr.append($("<td width='150px' />"));
+            tr.append($("<td />").html("<div class='tituloMiniatura'><a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + publicaciones[i].titulo + "</div></a>" + "<div class='descripcionMiniatura'>" + publicaciones[i].descripcion + "</div>"));
+            // tr.append($("<td />").html("<div class='descripcionMiniatura'>"+publicaciones[i].descripcion+"</div>"));
+            tr.append($("<td width='150px' />").html(publicaciones[i].tipo == "p" ? "Perdido" : "Encontrado"));
             tabla.append(tr);
         }
 
@@ -141,20 +137,16 @@ function filtrarPublicaciones(p) {
 function cargarTablaPublicaciones(publicaciones) {
     var tabla = $(".cuerpo table").empty();
 
-    var tr = $("<tr />");
-    tr.append($("<th />").html("Título"));
-    tr.append($("<th />").html("Descripción"));
-    tr.append($("<th />").html("Tipo"));
-    tr.append($("<th />").html("Imagen"));
-    tabla.append(tr);
 
     for (var i = 0; i < publicaciones.length; i++) {
-        tr = $("<tr />");
-        tr.append($("<td />").html("<a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + publicaciones[i].titulo + "</a>"));
-        tr.append($("<td />").html(publicaciones[i].descripcion));
-        tr.append($("<td />").html(publicaciones[i].tipo));
+        var tr = $("<tr class='filaMiniatura' />");
         if (publicaciones[i].foto != "")
-            tr.append($("<td />").html("<img class='imagenPublicacion' src='imgs/" + publicaciones[i].id +"/" +publicaciones[i].foto + "' />"));
+            tr.append($("<td width='150px' />").html("<a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + "<img class='imagenPublicacion' src='imgs/" + publicaciones[i].id + "/" + publicaciones[i].foto + "' />" + "</a>"));
+        else
+            tr.append($("<td width='150px' />"));
+        tr.append($("<td />").html("<div class='tituloMiniatura'><a target='_blank' href='publicacion.php?publicacion=" + publicaciones[i].id + "'>" + publicaciones[i].titulo + "</div></a>" + "<div class='descripcionMiniatura'>" + publicaciones[i].descripcion + "</div>"));
+        // tr.append($("<td />").html("<div class='descripcionMiniatura'>"+publicaciones[i].descripcion+"</div>"));
+        tr.append($("<td width='150px' />").html(publicaciones[i].tipo == "p" ? "Perdido" : "Encontrado"));
         tabla.append(tr);
     }
 }

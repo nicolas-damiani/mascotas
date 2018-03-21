@@ -42,7 +42,7 @@ function cargarBarrios($conn) {
 function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
 
 
-    $sql = "select count(*) as cantidad from publicaciones";
+    $sql = "select count(*) as cantidad from publicaciones where abierto = 1";
 
     $conn->consulta($sql);
 
@@ -58,7 +58,7 @@ function cargarPaginacionSinFiltro($conn, $pagina, $elementosPorPagina) {
 
 
 
-    $sql = "select * from publicaciones order by id desc limit :offset, :cantidad";
+    $sql = "select * from publicaciones where abierto = 1 order by id desc limit :offset, :cantidad";
 
     $param = array(
         array("offset", ($pagina - 1) * $elementosPorPagina, "int"),
@@ -147,9 +147,9 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
 
     if ($conditions !== "") {
-        $sql = "select count(*) as cantidad from publicaciones where " . $conditions;
+        $sql = "select count(*) as cantidad from publicaciones where " . $conditions. " AND abierto = 1";
     } else {
-        $sql = "select count(*) as cantidad from publicaciones ";
+        $sql = "select count(*) as cantidad from publicaciones where abierto = 1";
     }
 
 
@@ -170,9 +170,9 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
 
     if ($conditions != "") {
-        $sql = "select * from publicaciones where " . $conditions . " order by id desc limit :offset, :cantidad";
+        $sql = "select * from publicaciones where " . $conditions . " AND abierto = 1 order by id desc limit :offset, :cantidad";
     } else {
-        $sql = "select * from publicaciones order by id desc limit :offset, :cantidad";
+        $sql = "select * from publicaciones where abierto = 1 order by id desc limit :offset, :cantidad";
     }
 
     $param = array(
@@ -183,6 +183,35 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     $conn->consulta($sql, $param);
 
     $publicaciones = $conn->restantesRegistros();
+    
+    while (list($clave, $valor) = each($publicaciones)) {
+        if (strlen($valor["descripcion"]) > 150) {
+            $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 150) . "...";
+        }
+        if ($publicaciones[$clave]["tipo"] == "E")
+            $publicaciones[$clave]["tipo"] = "Encontrado";
+        else if ($publicaciones[$clave]["tipo"] == "P")
+            $publicaciones[$clave]["tipo"] = "Perdido";
+
+        $dir = "imgs/" . $publicaciones[$clave]["id"] . "/";
+
+        if (is_dir($dir)) {
+            $d = dir($dir);
+            // echo "Handle: " . $d->handle . "\n";
+            // echo "Path: " . $d->path . "\n";
+            while (false !== ($entry = $d->read())) {
+                // $fotos[] = $entry;
+                if ($entry != "." && $entry != "..") {
+                    $publicaciones[$clave]["foto"] = $entry;
+                }
+            }
+            $d->close();
+        } else {
+            $publicaciones[$clave]["foto"] = "";
+        }
+    }
+    
+    reset($publicaciones);
 
 
 

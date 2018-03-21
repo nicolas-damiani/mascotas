@@ -18,7 +18,7 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "razas") {
     }
 } else {
 
-    $elementosPorPagina = 2;
+    $elementosPorPagina = 10;
     $pagina = 1;
     if (isset($_POST["accion"]) && $_POST["p"]) {
         $accion = strlen($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
