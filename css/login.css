@@ -1,0 +1,103 @@
+
+#tituloLogin{
+    display:  flex;
+    height:  40px;
+    width:  50%;
+    align-items:  center;
+    justify-content:  center;
+    margin:  auto;
+    font-size:  3.5vw;
+}
+
+.error{
+    
+}
+
+#contenedorForm{
+    display: flex;
+    height: 260px;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    flex-direction:  column;
+}
+
+#contenedorEmail{
+    display:  flex;
+    height: 50px;
+    flex-direction:  column;
+    justify-content:  center;
+}
+
+#labelEmail{
+    width:  auto;
+}
+
+#email{
+    position: relative;
+    width: 245px;
+    height: 35px;
+    margin: 0px auto;
+    margin-top: 5px;
+    font-size: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 100%;
+    border-radius: 5px;
+    display: block;
+}
+
+#contenedorPassword{
+    margin-top:  10px;
+    margin-bottom:  10px;
+    display: flex;
+    height: 50px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#labelPassword{
+    width:  auto;
+}
+
+#password{
+    position: relative;
+    width: 245px;
+    height: 35px;
+    margin: 0px auto;
+    margin-top: 5px;
+    font-size: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 100%;
+    border-radius: 5px;
+    display: block;
+}
+
+#botonLogin{
+    position: relative;
+    width: 258px;
+    height: 27px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 27px;
+    border-radius: 5px;
+    margin: 0px auto;
+    margin-top: 15px;
+    opacity: 0.85;
+}
+
+#registrarseLabel{
+    margin-top: 20px;
+}
+
+
+#logoLogin{
+    display:  flex;
+    margin:  auto;
+    width: 18%;
+    margin-top: 30px;
+}
+
+

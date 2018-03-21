@@ -22,6 +22,10 @@ if (isset($_POST['accion'])) {
         if (isset($_POST['exitosa']) && $_POST['idPublicacion']) {
             cerrarPublicacion($conn, $_POST['exitosa'], $_POST['idPublicacion']);
         }
+    } else if ($_POST['accion'] == "responderPregunta") {
+        if (isset($_POST['idPregunta']) && $_POST['respuesta']) {
+            responderPregunta($conn, $_POST['idPregunta'], $_POST['respuesta']);
+        }
     }
 } else {
 
