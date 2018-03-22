@@ -14,6 +14,9 @@
 
         <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACChU-DFItFOx-BfhQdvtpOGZDJsG88d4&callback=initMap">
+                    $(document).ready(function () {
+                        
+                    });
         </script>
     </head>
     <body>
@@ -70,14 +73,14 @@
                         <option value="P">Perdida</option>
                     </select>
                 </div>
-                    
+
                 <div class="infoNuevaPublicacion">
                     <div class="infoTitulo">Seleccione una o multiples imagenes:</div>
                     <input type="file" name="archivos[]" multiple/>
                 </div>
 
                 <input type="hidden" name="accion" value="nuevaPublicacion" />
-                
+
                 <div id="labelMapa">Marque la ubicacion en el mapa:</div>
                 <div id="map"></div>
 
@@ -87,7 +90,7 @@
 
 
 
-                <input id="botonNuevaPublicacion" type="submit" value="Crear">
+                <button id="botonNuevaPublicacion" type="submit">Crear</button>
 
             </form>
         </div>

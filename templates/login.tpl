@@ -31,7 +31,7 @@
     </head>
     <body>
         {if !$logueado}
-            <div id="tituloLogin">LOGIN</div>
+            
 
             <img id="logoLogin" src='/Obligatorio/imgs/logo.png'>
 

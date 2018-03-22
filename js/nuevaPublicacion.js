@@ -3,9 +3,19 @@ $(document).ready(function () {
         cargarRazasSelector(this.value);
     })
 
-    $('#botonNuevaPublicacion').on('click', function () {
-        crearPublicacion();
-    })
+    $("form").submit(function (e) {
+        var barrioId = $('#selectBarrio').val();
+        var especieId = $('#selectEspecie').val();
+        var razaId = $('#selectRaza').val();
+        var tipo = $('#selectTipo').val();
+        var titulo = $('#titulo').val();
+        var descripcion = $('#descripcion').val();
+
+        if (barrioId == null || especieId == null || razaId == null || titulo == "" || descripcion == "") {
+            e.preventDefault();
+            alert("debe completar todos los datos.");
+        }
+    });
 });
 
 
@@ -30,35 +40,7 @@ function handleEvent(event) {
     document.getElementById('lng').value = event.latLng.lng();
 }
 
-function crearPublicacion() {
-    var barrioId = $('#selectBarrio').val();
-    var especieId = $('#selectEspecie').val();
-    var razaId = $('#selectRaza').val();
-    var tipo = $('#selectTipo').val();
-    var titulo = $('#titulo').val();
-    var descripcion = $('#descripcion').val();
-    if (barrioId != null && especieId != null && razaId != null && titulo != "" && descripcion != "") {
-        $.ajax({
-            url: "nuevaPublicacion.php",
-            dataType: "json",
-            type: "POST",
-            data: "accion=nuevaPublicacion&tipo=" + tipo + "&especie=" + especieId + "&raza=" + razaId + "&titulo=" + titulo + "&descripcion=" + descripcion + "&barrio=" + barrioId,
-            timeout: 2000,
-            beforeSend: function () {
-                //      cargando();
-            }
-        }).done(function (data) {
-            if (data.status == "ok") {
-                alert("Publicacion agregada correctamente");
-            } else {
-                alert("No se pudo agregar la publicacion");
-            }
 
-        });
-    } else {
-        alert("Debe llenar todos los datos");
-    }
-}
 
 function enviarImagenes() {
     var data = new FormData($('input[name^="media"]'));
