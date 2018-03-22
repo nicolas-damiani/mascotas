@@ -112,8 +112,8 @@ $(document).ready(function () {
 function initMap() {
     if ($('#latitud').val() != "" && $('#longitud').val() != "") {
 
-        var lat = parseInt($('#latitud').val());
-        var long = parseInt($('#longitud').val());
+        var lat = parseFloat($('#latitud').val());
+        var long = parseFloat($('#longitud').val());
 
 
         var uluru = {lat: lat, lng: long};
@@ -147,7 +147,9 @@ function cerrarPublicacion() {
         }
     }).done(function (data) {
         if (data.status == "ok") {
-            alert('publicacion cerrada');
+            html = "<div class='labelInfoPublicacion' style='width:30%'>Publicación cerrada correctamente!</div><a href='publicaciones.php'><div class='boton' style='margin-left:0px;'>Volver a publicaciones</div></a>";
+            $('#contenedorCerrar').html("");
+            $('#contenedorCerrar').html(html);
         } else {
             alert("error cerrando publicacion");
         }
