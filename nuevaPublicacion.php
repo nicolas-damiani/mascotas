@@ -7,6 +7,11 @@ require_once("libs/funciones.php");
 require_once("libs/class.Conexion.BD.php");
 include_once("configuracion.php");
 
+if (!(isset($_SESSION["user"]))){
+    header("location: publicaciones.php");
+    exit;
+}
+
 $conn->conectar();
 $respuesta=array();
 if (isset($_POST['accion'])) {

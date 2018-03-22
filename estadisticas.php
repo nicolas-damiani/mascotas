@@ -8,6 +8,11 @@ require_once("libs/class.Conexion.BD.php");
 include_once("configuracion.php");
 
 
+if (!(isset($_SESSION["user"]))){
+    header("location: publicaciones.php");
+    exit;
+}
+
 $conn->conectar();
 
 if (isset($_POST['accion']) && $_POST['accion'] == 'cargarDatos') {
