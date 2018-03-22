@@ -84,8 +84,8 @@
                 <div id="labelMapa">Marque la ubicacion en el mapa:</div>
                 <div id="map"></div>
 
-                <input id="lat" type="hidden" name="latitud" />
-                <input id="lng" type="hidden" name="longitud" />
+                <input id="lat" type="hidden" name="latitud" value="-34.5"/>
+                <input id="lng" type="hidden" name="longitud" value="-56"/>
 
 
 
