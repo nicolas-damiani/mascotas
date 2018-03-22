@@ -39,12 +39,11 @@ if (isset($_POST['accion'])) {
                     }
                 }
 
-
-                $respuesta['status'] = "ok";
+                header("location publicaciones.php");
+                exit;
             } else {
-                $respuesta['status'] = "error";
+                $mensaje ="Error agregando publicacion";
             }
-            echo json_encode($respuesta);
         }
     } else if ($_POST['accion'] == "cargarRazas") {
         if (isset($_POST["especie"])) {
