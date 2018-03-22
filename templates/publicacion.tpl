@@ -43,6 +43,10 @@
                         </div>
                     {/foreach}
                 </div>
+                
+                    {foreach from=$fotos item=valor}
+                            <img  class="imagenPublicacionHidden" src="imgs/{$publicacion.id}/{$valor}" />
+                    {/foreach}
             </div>
 
             <div class="columna2">

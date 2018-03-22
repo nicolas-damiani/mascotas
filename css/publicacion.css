@@ -118,14 +118,16 @@
 
 .boton{
     display: flex;
-    width: 20%;
-    height: 30px;
+    width: 28%;
+    height: 41px;
     align-items: center;
     justify-content: center;
     margin:  auto;
-    background-color:  beige;
+    /* background-color:  beige; */
     font-size: 1vw;
     margin-top:  10px;
+    border:  1px solid;
+    cursor:  pointer;
 }
 
 #labelCerrarPublicacion{
@@ -171,4 +173,13 @@
 
 .responder{
     margin-left:  20px;
+}
+
+.imagenPublicacionHidden{
+    height: 200px;
+    margin: 35px auto;
+    position: absolute;
+    top: 99999;
+    top: 999px;
+    right: 99999px;
 }

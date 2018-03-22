@@ -63,7 +63,7 @@ $(document).ready(function () {
                 position += 10;
             });
 
-            $('.imagenPublicacion').each(function (index) {
+            $('.imagenPublicacionHidden').each(function (index) {
                 if (position >= (pageHeight-20))
                 {
                     doc.addPage();
