@@ -76,7 +76,7 @@
 
                 <div class="infoNuevaPublicacion">
                     <div class="infoTitulo">Seleccione una o multiples imagenes:</div>
-                    <input type="file" name="archivos[]" multiple/>
+                    <input id="imagenes" type="file" name="archivos[]" multiple/>
                 </div>
 
                 <input type="hidden" name="accion" value="nuevaPublicacion" />

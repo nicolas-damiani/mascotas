@@ -7,47 +7,46 @@ require_once("libs/funciones.php");
 require_once("libs/class.Conexion.BD.php");
 include_once("configuracion.php");
 
-if (!(isset($_SESSION["user"]))){
+if (!(isset($_SESSION["user"]))) {
     header("location: publicaciones.php");
     exit;
 }
 
 $conn->conectar();
-$respuesta=array();
+$respuesta = array();
 if (isset($_POST['accion'])) {
     if ($_POST['accion'] == "nuevaPublicacion") {
         if (isset($_POST['tipo']) && isset($_POST['especie']) && isset($_POST['raza']) && isset($_POST['titulo']) && isset($_POST['descripcion']) && isset($_POST['latitud']) && isset($_POST['longitud'])) {
-            $id = nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion'], $_POST['latitud'], $_POST['longitud']);
-            if ($id != false) {
-                $dir = "imgs/" . $id . "/";
+            if ($_FILES['archivos']['size'] != 0) {
+                $id = nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion'], $_POST['latitud'], $_POST['longitud']);
+                if ($id != false) {
+                    $dir = "imgs/" . $id . "/";
 
-                if (!is_dir($dir)) {
-                    mkdir($dir, 0777);
-                }
+                    if (!is_dir($dir)) {
+                        mkdir($dir, 0777);
+                    }
 
 
-
-                $error = array();
-                $extension = array("jpeg", "jpg", "png", "gif");
-                foreach ($_FILES["archivos"]["tmp_name"] as $key => $tmp_name) {
-                    $file_name = $_FILES["archivos"]["name"][$key];
-                    $file_tmp = $_FILES["archivos"]["tmp_name"][$key];
-                    $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-                    if (in_array($ext, $extension)) {
-                        if (move_uploaded_file($file_tmp, $dir . $file_name)) {
-                            
+                    $error = array();
+                    $extension = array("jpeg", "jpg", "png", "gif");
+                    foreach ($_FILES["archivos"]["tmp_name"] as $key => $tmp_name) {
+                        $file_name = $_FILES["archivos"]["name"][$key];
+                        $file_tmp = $_FILES["archivos"]["tmp_name"][$key];
+                        $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+                        if (in_array($ext, $extension)) {
+                            if (move_uploaded_file($file_tmp, $dir . $file_name)) {
+                                
+                            } else {
+                                array_push($error, "$file_name, ");
+                            }
                         } else {
                             array_push($error, "$file_name, ");
                         }
-                    } else {
-                        array_push($error, "$file_name, ");
                     }
-                }
 
-                header("location: publicaciones.php");
-                exit;
-            } else {
-                $mensaje ="Error agregando publicacion";
+                    header("location: publicaciones.php");
+                    exit;
+                }
             }
         }
     } else if ($_POST['accion'] == "cargarRazas") {

@@ -10,10 +10,16 @@ $(document).ready(function () {
         var tipo = $('#selectTipo').val();
         var titulo = $('#titulo').val();
         var descripcion = $('#descripcion').val();
+        var imageFiles = document.getElementById("imagenes"),
+        filesLength = imageFiles.files.length;
 
         if (barrioId == null || especieId == null || razaId == null || titulo == "" || descripcion == "") {
             e.preventDefault();
             alert("debe completar todos los datos.");
+        }
+        if (filesLength==0){
+            e.preventDefault();
+            alert("Debe de seleccionar por lo menos una imagen");
         }
     });
 });

@@ -94,7 +94,7 @@
 
 
             {if !$usuario}
-                <a href="index.php"><div id="iniciarSesion">Inicia sesión para realizar una pregunta</div></a>
+                <a href="login.php"><div id="iniciarSesion">Inicia sesión para realizar una pregunta</div></a>
             {elseif (($usuario eq true))}
                 <div id="nuevaPregunta" class="boton">Nueva pregunta</div>
             {/if}
