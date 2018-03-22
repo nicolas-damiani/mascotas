@@ -8,11 +8,11 @@ require_once("libs/class.Conexion.BD.php");
 include_once("configuracion.php");
 
 $conn->conectar();
-
+$respuesta=array();
 if (isset($_POST['accion'])) {
     if ($_POST['accion'] == "nuevaPublicacion") {
         if (isset($_POST['tipo']) && isset($_POST['especie']) && isset($_POST['raza']) && isset($_POST['titulo']) && isset($_POST['descripcion']) && isset($_POST['latitud']) && isset($_POST['longitud'])) {
-            $id = nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion'],$_POST['latitud'],  $_POST['longitud']);
+            $id = nuevaPublicacion($conn, $_POST['tipo'], $_POST['especie'], $_POST['raza'], $_POST['barrio'], $_POST['titulo'], $_POST['descripcion'], $_POST['latitud'], $_POST['longitud']);
             if ($id != false) {
                 $dir = "imgs/" . $id . "/";
 
@@ -41,11 +41,10 @@ if (isset($_POST['accion'])) {
 
 
                 $respuesta['status'] = "ok";
-                echo json_encode($respuesta);
             } else {
                 $respuesta['status'] = "error";
-                echo json_encode($respuesta);
             }
+            echo json_encode($respuesta);
         }
     } else if ($_POST['accion'] == "cargarRazas") {
         if (isset($_POST["especie"])) {

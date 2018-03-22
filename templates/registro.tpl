@@ -43,7 +43,7 @@
 
     </head>
     <body>
-        <h1>REGISTRO DE USUARIO</h1>
+        <div id="tituloRegistro">REGISTRO DE USUARIO</div>
 
         {if $mensaje }
             <div class="error">

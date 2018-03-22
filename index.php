@@ -37,6 +37,7 @@ if(isset($_SESSION["user"])){
     $inactividad = time_elapsed($diferencia);
     
     $_SESSION["user"]["uacceso"] = time();
+    header("location: publicaciones.php");
 }
 
 if ($accion == "login") {

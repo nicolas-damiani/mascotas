@@ -87,7 +87,7 @@
 
 
 
-                <input id="crearBoton" type="submit" value="Crear">
+                <input id="botonNuevaPublicacion" type="submit" value="Crear">
 
             </form>
         </div>
