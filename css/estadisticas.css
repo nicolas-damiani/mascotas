@@ -1,6 +1,28 @@
 .graficoEstadisticas{
-    width: 900px;
-    height: 500px;
+    width: 500px;
+    height: 370px;
+    margin:  auto;
+}
 
+.cuadroEstadisticas{
+    display:  flex;
+    flex-direction:  column;
+    width: 75%;
+    margin: 0px auto;
+    overflow:  hidden;
+    margin-top:  20px;
+}
+
+#tituloPpalEstadisticas{
+    display:  flex;
+    width:  50%;
+    margin:  auto;
+    align-items:  center;
+    justify-content:  center;
+    margin-top:  25px;
+    font-size: 30px;
+}
+
+.tituloEstadisticas{
     
 }

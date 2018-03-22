@@ -9,7 +9,8 @@
         <link href="css/estadisticas.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-
+        {include file="encabezado.tpl"}
+        <div id="tituloPpalEstadisticas">ESTADISTICAS</div>
         <div class="cuadroEstadisticas">
             <div id="publicacionesPorEspecie"style="display: none"> </div>
             <div class="tituloEstadisticas">Publicaciones por Especies:</div>

@@ -17,6 +17,12 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'cargarDatos') {
     
     echo json_encode($datos);
 } else {
+    if (!isset($_SESSION["user"])) {
+        $usuario = false;
+    } else {
+        $usuario = $_SESSION["user"];
+    }
     $smarty->assign("publicacionesPorEspecie", $publicacionesPorEspecie);
+    $smarty->assign("usuario", $usuario);
     $smarty->display("estadisticas.tpl");
 }

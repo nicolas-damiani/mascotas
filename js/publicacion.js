@@ -17,7 +17,7 @@ $(document).ready(function () {
             var respuesta = $(this).siblings('.inputRespuesta').val();
             if (respuesta != "" && respuesta != " ") {
                 responderPregunta(idPregunta, respuesta);
-            }else{
+            } else {
                 alert("La respuesta no puede ser vacia");
             }
         }
@@ -25,15 +25,50 @@ $(document).ready(function () {
 
     $('#pdf').on({
         'click': function () {
-            var doc = new jsPDF();
+            var doc = new jsPDF(),
+                    margins = {
+                        top: 40,
+                        bottom: 60,
+                        left: 40,
+                        width: 522
+                    };
 
-            doc.text(10, 10, "Titulo: " + $('#tituloPublicacion').html());
-            doc.text(10, 20, "Estado: " + $('#estadoPublicacion').html());
-            doc.text(10, 30, "Especie: " + $('#especiePublicacion').html());
-            doc.text(10, 40, 'Descripcion' + $('#descripcionPublicacion').html());
+            var pageHeight = doc.internal.pageSize.height;
+            
+            doc.setFontType("bold");
+            doc.text(10, 10, "Titulo: ");
+            doc.setFontType("normal");
+            doc.text(50, 10, $('#tituloPublicacion').html());
+            doc.setFontType("bold");
+            doc.text(10, 20, "Estado: ");
+            doc.setFontType("normal");
+            doc.text(50, 20, $('#estadoPublicacion').html());
+            doc.setFontType("bold");
+            doc.text(10, 30, "Especie: ");
+            doc.setFontType("normal");
+            doc.text(50, 30, $('#especiePublicacion').html());
+            doc.setFontType("bold");
+            doc.text(10, 40, "Descripción:");
+            doc.setFontType("normal");
+            var descripcion = doc.splitTextToSize($('#descripcionPublicacion').html(), 140);
 
-            var position = 50;
+            var position = 40;
+            descripcion.forEach(function (item, index) {
+                if (position >= (pageHeight-20))
+                {
+                    doc.addPage();
+                    position = 10;
+                }
+                doc.text(50, position, item);
+                position += 10;
+            });
+
             $('.imagenPublicacion').each(function (index) {
+                if (position >= (pageHeight-20))
+                {
+                    doc.addPage();
+                    position = 10;
+                }
                 doc.addImage(this, 'png', 10, position);
                 position += 60;
             });
@@ -97,25 +132,6 @@ function initMap() {
 
 
 
-
-function exportarPublicacion() {
-    $.ajax({
-        url: "publicacion.php",
-        dataType: "json",
-        type: "POST",
-        data: "accion=exportarPublicacion",
-        timeout: 2000,
-        beforeSend: function () {
-            //cargando();
-        }
-    }).done(function (data) {
-        if (data.status == "ok") {
-            alert('publicacion cerrada');
-        } else {
-            alert("error cerrando publicacion");
-        }
-    })
-}
 
 function cerrarPublicacion() {
     var exitoso = $('#selectExito').val();

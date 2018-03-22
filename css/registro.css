@@ -1,0 +1,60 @@
+#contenedorRegistro{
+    width: 30%;
+    margin: 0px auto;
+    display:  flex;
+    height: 270px;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(255,255,255,1);
+}
+
+.filaRegistro{
+    display:  flex;
+    width:  100%;
+    height: 24px;
+    margin: 15px auto;
+    align-items:  center;
+    flex-wrap:  wrap;
+    justify-content:  center;
+}
+
+.labelRegistro{
+    display:  flex;
+    height: 100%;
+    width: 40%;
+    font-size: 15px;
+}
+
+.dataRegistro{
+    display:  flex;
+    width: 34%;
+    margin-left: 10px;
+}
+
+#botonRegistro{
+    width: 40%;
+    margin: 20px auto;
+}
+
+#contenedorForm{
+    display: flex;
+    width: 100%;
+    flex-direction:  column;
+    height: 100%;
+}
+
+.error{
+    height:  100%;
+    font-size: 13px;
+    color:  white;
+}
+
+#tituloRegistro{
+    display: flex;
+    width: 400px;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size:  28px;
+    margin-top:  20px;
+    margin-bottom: 20px;
+}

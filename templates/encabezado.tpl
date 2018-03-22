@@ -5,26 +5,29 @@
     </head>
     <body>
         <div class="contenidoEncabezado">
+            <div id="contenedorLogoHeader">
+                <img id="logoHeader" src='/Obligatorio/imgs/logo.png'> 
+            </div>
             <div id="divEncabezado"> 
 
-                <div id="contenedorLogoHeader">
-                    <img id="logoHeader" src='/Obligatorio/imgs/logo.png'> 
-                </div>
-                <div class="opcionEncabezado">Publicaciones</div>
+
+                <div class="opcionEncabezado"><a href="publicaciones.php">Publicaciones</a></div>
 
 
                 {if $usuario}
-                    <div class="opcionEncabezado">Nueva Publicacion</div>
+                    <div class="opcionEncabezado">
+                        <a href="nuevaPublicacion.php">Nueva Publicacion</a>
+                    </div>
                 {/if}
 
                 {if $usuario}
-                    <div class="opcionEncabezado">Estadisticas</div>
+                    <div class="opcionEncabezado"><a href="estadisticas.php">Estadisticas</a></div>
                 {/if}
 
                 {if !$usuario}
-                    <div class="opcionEncabezado">Iniciar Sesion</div>
+                    <div class="opcionEncabezado"><a href="index.php">Iniciar Sesion</a></div>
                 {else}
-                    <div class="opcionEncabezado">Cerrar Sesion</div>
+                    <div class="opcionEncabezado"><a href="index.php?accion=logout">Cerrar Sesion</a></div>
                 {/if}
             </div>
         </div>
