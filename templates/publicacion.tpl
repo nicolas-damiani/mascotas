@@ -43,10 +43,10 @@
                         </div>
                     {/foreach}
                 </div>
-                
-                    {foreach from=$fotos item=valor}
-                            <img  class="imagenPublicacionHidden" src="imgs/{$publicacion.id}/{$valor}" />
-                    {/foreach}
+
+                {foreach from=$fotos item=valor}
+                    <img  class="imagenPublicacionHidden" src="imgs/{$publicacion.id}/{$valor}" />
+                {/foreach}
             </div>
 
             <div class="columna2">
@@ -110,7 +110,7 @@
         </div>
 
         {if $creador}
-            <div class="filaPublicacion">
+            <div id="contenedorCerrar" class="filaPublicacion">
                 <div class="labelInfoPublicacion" style="width:  22%;">Cerrar Publicación:</div>
                 <div id="labelCerrarPublicacion">Indique si la mascota fue encontrada o no</div>
                 <select id="selectExito">

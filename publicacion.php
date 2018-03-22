@@ -20,7 +20,13 @@ if (isset($_POST['accion'])) {
         }
     } else if ($_POST['accion'] == "cerrarPublicacion") {
         if (isset($_POST['exitosa']) && $_POST['idPublicacion']) {
-            cerrarPublicacion($conn, $_POST['exitosa'], $_POST['idPublicacion']);
+            $result = cerrarPublicacion($conn, $_POST['exitosa'], $_POST['idPublicacion']);
+            if ($result == true) {
+                $respuesta['status'] = "ok";
+            } else {
+                $respuesta['status'] = "error";
+            }
+            echo json_encode($respuesta);
         }
     } else if ($_POST['accion'] == "responderPregunta") {
         if (isset($_POST['idPregunta']) && $_POST['respuesta']) {
@@ -51,13 +57,13 @@ if (isset($_POST['accion'])) {
     }
 
     $cerrada = false;
- /*   if (((int) $publicacion['abierto'] == 0)) {
-        $cerrada = true;
-        $exitosa = false;
-        if (((int) $publicacion['exitoso'] == 1)) {
-            $exitosa = true;
-        }
-    }*/
+    /*   if (((int) $publicacion['abierto'] == 0)) {
+      $cerrada = true;
+      $exitosa = false;
+      if (((int) $publicacion['exitoso'] == 1)) {
+      $exitosa = true;
+      }
+      } */
 
     /*
      * PROCESO EL CONTENIDO DEL TEMPLATE

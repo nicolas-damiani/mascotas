@@ -147,7 +147,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
 
 
     if ($conditions !== "") {
-        $sql = "select count(*) as cantidad from publicaciones where " . $conditions. " AND abierto = 1";
+        $sql = "select count(*) as cantidad from publicaciones where " . $conditions . " AND abierto = 1";
     } else {
         $sql = "select count(*) as cantidad from publicaciones where abierto = 1";
     }
@@ -183,7 +183,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
     $conn->consulta($sql, $param);
 
     $publicaciones = $conn->restantesRegistros();
-    
+
     while (list($clave, $valor) = each($publicaciones)) {
         if (strlen($valor["descripcion"]) > 150) {
             $publicaciones[$clave]["descripcion"] = substr($valor["descripcion"], 0, 150) . "...";
@@ -210,7 +210,7 @@ function cargarPaginacionConFiltro($conn, $pagina, $elementosPorPagina, $filtros
             $publicaciones[$clave]["foto"] = "";
         }
     }
-    
+
     reset($publicaciones);
 
 
@@ -300,14 +300,9 @@ function cerrarPublicacion($conn, $exitosa, $idPublicacion) {
 
     $result = $conn->consulta($sql);
 
+    return $result;
 
-
-    if ($result == true) {
-        $respuesta['status'] = "ok";
-    } else {
-        $respuesta['status'] = "error";
-    }
-    echo json_encode($respuesta);
+    
 }
 
 function cargarPublicacionesPorEspecie($conn) {

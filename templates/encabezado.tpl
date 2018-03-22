@@ -25,6 +25,7 @@
                 {/if}
 
                 {if !$usuario}
+                    <div class="opcionEncabezado"><a href="registro.php">Registrarme</a></div>
                     <div class="opcionEncabezado"><a href="login.php">Iniciar Sesion</a></div>
                 {else}
                     <div class="opcionEncabezado"><a href="login.php?accion=logout">Cerrar Sesion</a></div>
