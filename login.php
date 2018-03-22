@@ -48,7 +48,7 @@ if ($accion == "login") {
 } else if ($accion == "logout") {
     unset($_SESSION["user"]);
     session_destroy();
-    header("location: " . $_SERVER["PHP_SELF"]);
+    header("location: publicaciones.php");
     die();
 }else if(isset($_SESSION["user"])){
     $diferencia = $_SESSION["user"]["uacceso"] - $_SESSION["user"]["acceso"];
