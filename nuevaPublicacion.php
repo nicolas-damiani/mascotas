@@ -39,7 +39,7 @@ if (isset($_POST['accion'])) {
                     }
                 }
 
-                header("location publicaciones.php");
+                header("location: publicaciones.php");
                 exit;
             } else {
                 $mensaje ="Error agregando publicacion";

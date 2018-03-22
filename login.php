@@ -28,10 +28,7 @@ foreach($resultados as $res){
 
 $conn->desconectar();
 
-if(isset($_SESSION["user"])){
-    header("location: publicaciones.php");
-    exit;
-}
+
 
 if ($accion == "login") {
     if (isset($logins[$_POST["email"]]) && md5($_POST["password"]) == $logins[$_POST["email"]]) {
@@ -53,6 +50,18 @@ if ($accion == "login") {
     session_destroy();
     header("location: " . $_SERVER["PHP_SELF"]);
     die();
+}else if(isset($_SESSION["user"])){
+    $diferencia = $_SESSION["user"]["uacceso"] - $_SESSION["user"]["acceso"];
+    
+    if($diferencia > 60) {
+        $accion = "logout";
+    }
+    
+    $inactividad = time_elapsed($diferencia);
+    
+    $_SESSION["user"]["uacceso"] = time();
+    header("location: publicaciones.php");
+    exit;
 }
 
 /*
