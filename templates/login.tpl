@@ -48,7 +48,7 @@
                     </div>
                     <div id="contenedorPassword">
                         <label id="labelPassword" for="password">Contraseña</label>
-                        <input id="password" name="password" />
+                        <input id="password" type="password" name="password" />
                     </div>
                     <input type="hidden" name="accion" value="login" />
                     <button id="botonLogin" type="submit">Acceder</button>

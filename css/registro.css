@@ -58,3 +58,15 @@
     margin-top:  20px;
     margin-bottom: 20px;
 }
+
+
+div.error {
+    border: red 2px solid;
+    padding: 10px;
+    margin: 10px 0;
+    color: #AACCFF;
+    font-weight: bold;
+    /* width: 238px; */
+    margin: 26px auto;
+    margin-top: 64px;
+}
